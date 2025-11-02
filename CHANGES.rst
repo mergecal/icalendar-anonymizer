@@ -24,4 +24,6 @@ Breaking changes:
 
 New features:
 
+- Add conventional commits configuration (``.cz.toml``), pre-commit hooks, CI workflows, and documentation. See `Issue 27 <https://github.com/mergecal/icalendar-anonymizer/issues/27>`_.
+
 Bug fixes:
