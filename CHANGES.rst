@@ -49,6 +49,7 @@ New features
 ''''''''''''
 
 - Added conventional commits configuration (``.cz.toml``), pre-commit hooks, CI workflows, and documentation. See `Issue 27 <https://github.com/mergecal/icalendar-anonymizer/issues/27>`_.
+- Applied Sphinx best practices to ``CHANGES.rst`` including proper RST roles, subheadings, and past tense verbs. See `Issue 31 <https://github.com/mergecal/icalendar-anonymizer/issues/31>`_.
 
 Bug fixes
 '''''''''
