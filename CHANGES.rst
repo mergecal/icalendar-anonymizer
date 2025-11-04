@@ -2,7 +2,7 @@
 Change log
 ==========
 
-We use `Semantic Versioning <https://semver.org>`_.
+icalendar-anonymizer uses `Semantic Versioning <https://semver.org>`_.
 
 Given a version number MAJOR.MINOR.PATCH, increment the:
 
@@ -13,17 +13,43 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
 When adding entries:
 
 - Add entries as bullet points under the appropriate category.
-- Use double backticks for code: ``function_name()``, ``file.py``, ``PROPERTY``.
-- Reference issues/PRs when relevant: ``See `Issue 123 <url>`_.``
-- Start with a verb: "Add", "Fix", "Remove", "Update", etc.
+- Use double backticks for `inline literals <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#rst-roles>`_.
+
+  .. code-block:: rst
+
+      ``PROPERTY``
+
+- Use the `Python domain <https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_ to mark up Python modules, classes, methods, and other Python objects.
+
+  .. code-block:: rst
+
+      :py:func:`function_name`
+
+- Use the ``:file:`` directive for `files <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-file>`_.
+
+  .. code-block:: rst
+
+      :file:`file.py`
+
+- Reference issues and pull requests with a link when relevant.
+
+  .. code-block:: rst
+
+      See `Issue 123 <url>`_.
+
+- Start with a past tense verb, such as "Added", "Fixed", "Removed", "Updated", and other verbs.
 
 0.1.0 (unreleased)
 ------------------
 
-Breaking changes:
+Breaking changes
+''''''''''''''''
 
-New features:
+New features
+''''''''''''
 
-- Add conventional commits configuration (``.cz.toml``), pre-commit hooks, CI workflows, and documentation. See `Issue 27 <https://github.com/mergecal/icalendar-anonymizer/issues/27>`_.
+- Added conventional commits configuration (``.cz.toml``), pre-commit hooks, CI workflows, and documentation. See `Issue 27 <https://github.com/mergecal/icalendar-anonymizer/issues/27>`_.
+- Applied Sphinx best practices to ``CHANGES.rst`` including proper RST roles, subheadings, and past tense verbs. See `Issue 31 <https://github.com/mergecal/icalendar-anonymizer/issues/31>`_.
 
-Bug fixes:
+Bug fixes
+'''''''''
