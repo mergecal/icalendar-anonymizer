@@ -2,11 +2,7 @@
 
 Thanks for contributing to icalendar-anonymizer.
 
-## What is icalendar-anonymizer?
-
-A Python library, CLI tool, and web service for anonymizing iCalendar files. It strips personal data while preserving technical properties needed for debugging calendar issues.
-
-The library hashes SUMMARY, DESCRIPTION, LOCATION, ATTENDEE, ORGANIZER, and other personal fields. It preserves DTSTART, RRULE, VTIMEZONE, and technical properties. Unknown properties get hashed by default for safety.
+For project overview and usage, see [README.md](README.md).
 
 ## Getting Started
 
