@@ -117,11 +117,12 @@ Runs on port 8000 by default. Includes SSRF protection (blocks localhost and pri
 - Unknown/X- properties (safe by default)
 
 **What stays intact:**
-- DTSTART, DTEND, DURATION
+- DTSTART, DTEND, DUE, DURATION, DTSTAMP
 - RRULE, RDATE, EXDATE
-- VTIMEZONE, TZID
+- VTIMEZONE, TZID, TZOFFSETFROM, TZOFFSETTO
 - UID (hashed but unique)
 - SEQUENCE, STATUS, TRANSP, CLASS, PRIORITY
+- CATEGORIES
 
 ## Contributing
 
