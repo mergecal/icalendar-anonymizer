@@ -62,6 +62,9 @@ with open('anonymized.ics', 'wb') as f:
 # Basic usage
 icalendar-anonymize input.ics -o output.ics
 
+# Shorter alias
+ican input.ics -o output.ics
+
 # Unix-style piping
 cat calendar.ics | icalendar-anonymize > anonymized.ics
 
@@ -79,14 +82,16 @@ icalendar-anonymize calendar.ics
 
 ```bash
 # POST with ICS content
-curl -X POST https://anonymizer.example.com/anonymized \
-     --data-binary @calendar.ics
+curl -X POST https://anonymizer.example.com/anonymize \
+     -H "Content-Type: application/json" \
+     -d '{"ics": "BEGIN:VCALENDAR..."}'
 
-# GET with query parameter
-curl "https://anonymizer.example.com/anonymized?ics=BEGIN:VCALENDAR..."
+# Upload ICS file
+curl -X POST https://anonymizer.example.com/upload \
+     -F "file=@calendar.ics"
 
 # Fetch and anonymize URL
-curl "https://anonymizer.example.com/anonymous?url=https://example.com/cal.ics"
+curl "https://anonymizer.example.com/fetch?url=https://example.com/cal.ics"
 ```
 
 FastAPI provides interactive docs at `/docs` for testing.
