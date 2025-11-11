@@ -64,10 +64,9 @@ docs: update installation instructions
 
 ### Pre-commit Hooks (Optional)
 
-Install to validate commits locally:
+Enable to validate commits locally:
 
 ```bash
-pip install pre-commit commitizen
 pre-commit install --hook-type commit-msg
 ```
 
