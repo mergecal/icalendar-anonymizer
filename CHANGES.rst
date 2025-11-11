@@ -51,8 +51,8 @@ New features
 - Added conventional commits configuration (``.cz.toml``), pre-commit hooks, CI workflows, and documentation. See `Issue 27 <https://github.com/mergecal/icalendar-anonymizer/issues/27>`_.
 - Applied Sphinx best practices to ``CHANGES.rst`` including proper RST roles, subheadings, and past tense verbs. See `Issue 31 <https://github.com/mergecal/icalendar-anonymizer/issues/31>`_.
 - Added project configuration files (``.gitignore``, ``.editorconfig``, ``.python-version``, ``requirements-dev.txt``). See `Issue 16 <https://github.com/mergecal/icalendar-anonymizer/issues/16>`_.
-- Added AGPL-3.0-or-later license. See `Issue 14 <https://github.com/mergecal/icalendar-anonymizer/issues/14>`_.
-- Added ``CONTRIBUTING.md`` with development workflow, commit message format, testing requirements, and project structure. See `Issue 15 <https://github.com/mergecal/icalendar-anonymizer/issues/15>`_.
+- Added :file:`LICENSE` with AGPL-3.0-or-later license. See `Issue 14 <https://github.com/mergecal/icalendar-anonymizer/issues/14>`_.
+- Added :file:`CONTRIBUTING.md` with development workflow, commit message format, testing requirements, and project structure. See `Issue 15 <https://github.com/mergecal/icalendar-anonymizer/issues/15>`_.
 
 Bug fixes
 '''''''''
