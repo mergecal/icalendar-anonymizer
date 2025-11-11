@@ -54,6 +54,7 @@ New features
 - Added :file:`LICENSE` with AGPL-3.0-or-later license. See `Issue 14 <https://github.com/mergecal/icalendar-anonymizer/issues/14>`_.
 - Added :file:`CONTRIBUTING.md` with development workflow, commit message format, testing requirements, and project structure. See `Issue 15 <https://github.com/mergecal/icalendar-anonymizer/issues/15>`_.
 - Added :file:`README.md` with installation instructions and usage examples for Python API, CLI, and web service. See `Issue 13 <https://github.com/mergecal/icalendar-anonymizer/issues/13>`_.
+- Added :file:`pyproject.toml` with hatchling build system, hatchling-vcs version management, package structure, and dependencies. Tests included in package at ``src/icalendar_anonymizer/tests/``. See `Issue 12 <https://github.com/mergecal/icalendar-anonymizer/issues/12>`_.
 
 Bug fixes
 '''''''''
