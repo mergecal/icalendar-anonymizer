@@ -18,6 +18,8 @@ Install development dependencies:
 pip install -e ".[dev]"
 ```
 
+This includes pytest, ruff, pre-commit, and commitizen. For building docs, use `pip install -e ".[doc]"`.
+
 ## Development Workflow
 
 1. Create a feature branch from `main`
