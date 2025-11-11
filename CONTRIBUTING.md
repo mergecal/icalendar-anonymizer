@@ -2,7 +2,6 @@
 
 Thanks for contributing to icalendar-anonymizer.
 
-For project overview and usage, see [README.md](README.md).
 
 ## Getting Started
 
