@@ -36,16 +36,18 @@ pytest
 
 Aim for 90%+ coverage. All tests must pass before merge.
 
+CI runs tests on Python 3.9-3.12 across Ubuntu, Windows, and macOS. Coverage is tracked via Codecov.
+
 ### Code Quality
 
-Run Ruff for linting and formatting:
+Check code style and auto-format:
 
 ```bash
-ruff check .
-ruff format .
+ruff check .    # Check for linting errors
+ruff format .   # Auto-format code
 ```
 
-CI enforces the same checks.
+CI enforces the same Ruff version and checks.
 
 ## Commit Message Format
 
@@ -92,7 +94,7 @@ Add docstrings to public APIs. We use Sphinx for documentation generation.
 - **Library**: Core anonymization in `src/icalendar_anonymizer/`
 - **CLI**: Command-line interface (installed via `[cli]` extra)
 - **Web**: FastAPI web service (installed via `[web]` extra)
-- **Tests**: Organized by component in `tests/`
+- **Tests**: In `tests/`
 
 ## Release Process
 
