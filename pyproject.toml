@@ -58,7 +58,7 @@ dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
     "coverage>=7.0",
-    "ruff>=0.8.0",
+    "ruff>=0.14.0",
     "commitizen>=4.1.0",
     "pre-commit>=3.0.0",
     "build>=1.0.0",
@@ -67,9 +67,9 @@ dev = [
 
 doc = [
     "sphinx>=7.0",
-    "sphinx-autobuild>=2021.3.14",
+    "sphinx-autobuild>=2024.10.3",
     "sphinx-copybutton>=0.5.2",
-    "pydata-sphinx-theme>=0.14.4",
+    "pydata-sphinx-theme>=0.16.0",
 ]
 
 test = ["pytest>=7.0", "pytest-cov>=4.0", "coverage>=7.0", "hypothesis>=6.0"]
