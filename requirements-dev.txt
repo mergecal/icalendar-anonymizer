@@ -1,8 +1,0 @@
-# Development dependencies
-# These will move to pyproject.toml [project.optional-dependencies] when #12 is implemented
-
-# Commit message validation
-commitizen>=4.1.0
-
-# Pre-commit hooks
-pre-commit>=3.0.0
