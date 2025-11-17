@@ -38,16 +38,21 @@ pytest
 
 CI runs tests on Python 3.11-3.13 across Ubuntu, Windows, and macOS. Coverage is tracked via Codecov.
 
-### Code Quality
+### Code Quality with Ruff
 
-Check code style and auto-format:
+We use [Ruff](https://docs.astral.sh/ruff/) for linting and code formatting (100-character line length).
+
+**Manual formatting**:
 
 ```bash
-ruff check .    # Check for linting errors
-ruff format .   # Auto-format code
+ruff check .     # Check for linting errors
+ruff check . --fix  # Auto-fix linting errors
+ruff format .    # Auto-format code
 ```
 
-CI enforces the same Ruff version and checks.
+**Configuration**: Ruff settings are in `pyproject.toml` under `[tool.ruff]`.
+
+**CI enforcement**: CI runs the same Ruff version (>=0.14.0) to ensure consistency.
 
 ## Commit Message Format
 
@@ -66,23 +71,56 @@ docs: update installation instructions
 
 **PR titles** must follow the same format. We use squash merge, so the PR title becomes the commit message on `main`.
 
-### Pre-commit Hooks (Optional)
+### Pre-commit Hooks (Optional but Recommended)
 
-Enable to validate commits locally:
+Pre-commit hooks catch issues before committing, providing faster feedback than waiting for CI.
+
+**Setup** (one-time after cloning):
 
 ```bash
-pre-commit install --hook-type commit-msg
+pre-commit install              # Install pre-commit hooks
+pre-commit install --hook-type commit-msg  # Install commit message validation
 ```
 
-Pre-commit runs:
-- Commit message validation (commitizen)
-- Ruff linting and formatting
-- Trailing whitespace removal
-- End-of-file newline check
-- YAML/JSON validation
-- Large file prevention
+**What runs on every commit**:
 
-Checks run in under 5 seconds. CI validates all commits and PR titles regardless.
+- **Ruff linting** (`ruff check --fix`) - Auto-fixes linting errors
+- **Ruff formatting** (`ruff format`) - Auto-formats Python code
+- **Trailing whitespace** - Removes trailing spaces (preserves Markdown line breaks)
+- **End-of-file fixer** - Ensures files end with exactly one newline
+- **YAML validation** - Checks YAML syntax
+- **JSON validation** - Checks JSON syntax
+- **TOML validation** - Checks pyproject.toml syntax
+- **Python AST check** - Verifies Python files parse as valid syntax
+- **Case conflict check** - Detects filenames that differ only in case
+- **Merge conflict detection** - Prevents committing merge markers
+- **Large file prevention** - Blocks files >1MB
+- **Line ending normalization** - Enforces LF line endings
+- **Debug statement detection** - Catches forgotten `breakpoint()` or `pdb`
+- **Commit message validation** - Enforces conventional commits format
+
+**Performance**: All checks complete in under 5 seconds.
+
+**Skipping hooks** (use sparingly for WIP commits):
+
+```bash
+git commit --no-verify
+```
+
+**Running manually** (without committing):
+
+```bash
+pre-commit run --all-files     # Run all hooks on all files
+pre-commit run ruff --all-files  # Run specific hook
+```
+
+**Updating hook versions**:
+
+```bash
+pre-commit autoupdate
+```
+
+**Note**: Pre-commit is optional for contributors. CI enforces the same checks regardless. Core maintainers should use it.
 
 ## Pull Request Process
 
