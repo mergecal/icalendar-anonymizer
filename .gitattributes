@@ -3,16 +3,16 @@
 
 # Explicitly declare text files you want to always be normalized and converted
 # to LF in the repository and converted to native line endings on checkout
-*.py text
-*.rst text
-*.md text
-*.txt text
-*.yml text
-*.yaml text
-*.toml text
-*.cfg text
-*.ini text
-*.json text
+*.py text eol=lf
+*.rst text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.cfg text eol=lf
+*.ini text eol=lf
+*.json text eol=lf
 
 # Declare files that will always have LF line endings on checkout
 *.sh text eol=lf
