@@ -48,7 +48,7 @@ Breaking changes
 New features
 ''''''''''''
 
-- Added :file:`.gitattributes` to normalize line endings across platforms (LF for text files, CRLF on Windows checkout).
+- Added :file:`.gitattributes` to normalize line endings across platforms (LF in repository, native line endings on checkout).
 - Added comprehensive pre-commit hooks configuration with Ruff linting/formatting, file integrity checks, and commit message validation. Updated :file:`CONTRIBUTING.md` with setup instructions and usage documentation. Added Ruff badge to :file:`README.md`. See `Issue 20 <https://github.com/mergecal/icalendar-anonymizer/issues/20>`_.
 - Added conventional commits configuration (``.cz.toml``), pre-commit hooks, CI workflows, and documentation. See `Issue 27 <https://github.com/mergecal/icalendar-anonymizer/issues/27>`_.
 - Applied Sphinx best practices to ``CHANGES.rst`` including proper RST roles, subheadings, and past tense verbs. See `Issue 31 <https://github.com/mergecal/icalendar-anonymizer/issues/31>`_.
