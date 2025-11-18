@@ -1,0 +1,38 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          body: |
+            ## Installation
+
+            **PyPI:**
+            ```bash
+            pip install icalendar-anonymizer
+            ```
+
+            **Docker Hub:**
+            ```bash
+            docker pull sashankbhamidi/icalendar-anonymizer:${{ github.ref_name }}
+            ```
+
+            See [CHANGES.rst](https://github.com/mergecal/icalendar-anonymizer/blob/main/CHANGES.rst) for full changelog.
