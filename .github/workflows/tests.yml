@@ -23,10 +23,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install ruff
 
-      - name: Run ruff check
+      - name: Lint code
         run: ruff check .
 
-      - name: Run ruff format check
+      - name: Check code format
         run: ruff format --check .
 
   test:
@@ -64,3 +64,4 @@ jobs:
           files: ./coverage.xml
           flags: ${{ matrix.os }}-python-${{ matrix.python-version }}
           name: ${{ matrix.os }}-${{ matrix.python-version }}
+          fail_ci_if_error: true
