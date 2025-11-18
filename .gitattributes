@@ -1,8 +1,4 @@
-# Set default behavior to automatically normalize line endings
-* text=auto
-
-# Explicitly declare text files you want to always be normalized and converted
-# to LF in the repository and converted to native line endings on checkout
+# Explicitly declare text files to normalize to LF in repository and on checkout
 *.py text eol=lf
 *.rst text eol=lf
 *.md text eol=lf
