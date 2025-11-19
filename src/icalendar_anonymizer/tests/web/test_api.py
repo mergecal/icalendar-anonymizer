@@ -11,3 +11,7 @@ These tests should cover:
 
 See https://github.com/mergecal/icalendar-anonymizer/issues/4
 """
+
+
+def test_placeholder():
+    """Placeholder test until Issue #4 is implemented."""

@@ -12,6 +12,7 @@ LABEL org.opencontainers.image.licenses="AGPL-3.0-or-later"
 RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
+ENV PYTHONUNBUFFERED=true
 
 # Copy project files including .git for version detection
 COPY pyproject.toml README.md ./

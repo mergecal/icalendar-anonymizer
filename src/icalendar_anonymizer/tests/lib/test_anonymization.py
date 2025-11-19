@@ -10,3 +10,7 @@ These tests should cover:
 
 See https://github.com/mergecal/icalendar-anonymizer/issues/1
 """
+
+
+def test_placeholder():
+    """Placeholder test until Issue #1 is implemented."""
