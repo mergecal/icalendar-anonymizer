@@ -167,6 +167,7 @@ filterwarnings = ["ignore::DeprecationWarning"]
 [tool.coverage.run]
 source = ["src"]
 branch = true
+omit = ["src/icalendar_anonymizer/_version.py"]
 
 [tool.coverage.report]
 exclude_lines = [
@@ -178,3 +179,6 @@ exclude_lines = [
     "if TYPE_CHECKING:",
     "@abstractmethod",
 ]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.11", "3.12", "3.13"]
