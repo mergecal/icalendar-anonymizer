@@ -10,7 +10,24 @@ coverage:
         target: 90%
         threshold: 1%
 
+component_management:
+  individual_components:
+    - component_id: library
+      name: Core Library
+      paths:
+        - src/icalendar_anonymizer/*.py
+        - "!src/icalendar_anonymizer/cli.py"
+        - "!src/icalendar_anonymizer/webapp/**"
+    - component_id: cli
+      name: CLI
+      paths:
+        - src/icalendar_anonymizer/cli.py
+    - component_id: webapp
+      name: Web Service
+      paths:
+        - src/icalendar_anonymizer/webapp/**
+
 comment:
-  layout: "reach,diff,flags,tree"
+  layout: "reach,diff,flags,components,tree"
   behavior: default
   require_changes: false

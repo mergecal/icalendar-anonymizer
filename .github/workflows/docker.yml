@@ -9,7 +9,7 @@ jobs:
   docker:
     name: Build and push Docker image
     runs-on: ubuntu-latest
-    if: github.event.release.target_commitish == 'main' || github.event_name == 'workflow_dispatch'
+    if: (github.event_name == 'release' && github.event.release.target_commitish == 'main') || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout
@@ -35,7 +35,7 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            type=raw,value=latest,enable=${{ github.event.release.target_commitish == 'main' || github.event_name == 'workflow_dispatch' }}
+            type=raw,value=latest,enable=${{ (github.event_name == 'release' && github.event.release.target_commitish == 'main') || github.event_name == 'workflow_dispatch' }}
 
       - name: Build and push
         uses: docker/build-push-action@v6
