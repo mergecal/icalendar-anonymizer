@@ -362,7 +362,8 @@ def test_preserves_word_count_in_summary(simple_event):
     """Anonymized SUMMARY should preserve word count."""
     from icalendar_anonymizer import anonymize
 
-    original_words = len(["Team", "Meeting"])
+    original_summary = next(iter(simple_event.walk("VEVENT")))["summary"]
+    original_words = len(str(original_summary).split())
 
     anon_cal = anonymize(simple_event)
     event = next(iter(anon_cal.walk("VEVENT")))
@@ -375,7 +376,8 @@ def test_preserves_word_count_in_description(simple_event):
     """Anonymized DESCRIPTION should preserve word count."""
     from icalendar_anonymizer import anonymize
 
-    original_words = len(["Discuss", "project", "roadmap", "and", "timeline"])
+    original_description = next(iter(simple_event.walk("VEVENT")))["description"]
+    original_words = len(str(original_description).split())
 
     anon_cal = anonymize(simple_event)
     event = next(iter(anon_cal.walk("VEVENT")))
