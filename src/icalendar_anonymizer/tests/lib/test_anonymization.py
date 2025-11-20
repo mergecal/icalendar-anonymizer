@@ -1,16 +1,633 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
 """Tests for core anonymization functionality.
 
-TODO: Implement tests when core anonymization engine is added (Issue #1).
-
-These tests should cover:
-- Anonymizing SUMMARY, DESCRIPTION, LOCATION fields
-- Preserving DTSTART, DTEND, RRULE, EXDATE, RDATE
-- Hash-based consistent anonymization
-- Edge cases and malformed calendar handling
-
-See https://github.com/mergecal/icalendar-anonymizer/issues/1
+Test suite for Issues #1 and #2:
+- Property preservation (dates, recurrence, timezone, metadata)
+- Property anonymization (text fields, attendees, organizer)
+- UID handling with global salt
+- Unknown property handling (default-deny)
+- Edge cases and structure preservation
 """
 
+from datetime import datetime, timedelta
 
-def test_placeholder():
-    """Placeholder test until Issue #1 is implemented."""
+import pytest
+from icalendar import Calendar, Event, Todo
+
+
+@pytest.fixture
+def simple_event():
+    """Create a simple test event."""
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Team Meeting")
+    event.add("description", "Discuss project roadmap and timeline")
+    event.add("location", "Conference Room A")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("dtend", datetime(2024, 1, 15, 15, 0, 0))
+    event.add("uid", "original-uid-12345@example.com")
+    cal.add_component(event)
+    return cal
+
+
+@pytest.fixture
+def event_with_attendees():
+    """Create event with attendees and organizer."""
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Project Review")
+    event.add("dtstart", datetime(2024, 1, 20, 10, 0, 0))
+
+    # Add organizer with CN parameter
+    from icalendar import vCalAddress
+
+    organizer = vCalAddress("mailto:john.doe@example.com")
+    organizer.params["cn"] = "John Doe"
+    event.add("organizer", organizer)
+
+    # Add attendees with CN parameters
+    attendee1 = vCalAddress("mailto:jane.smith@example.com")
+    attendee1.params["cn"] = "Jane Smith"
+    attendee1.params["role"] = "REQ-PARTICIPANT"
+    event.add("attendee", attendee1)
+
+    attendee2 = vCalAddress("mailto:bob.jones@company.org")
+    attendee2.params["cn"] = "Bob Jones"
+    attendee2.params["partstat"] = "ACCEPTED"
+    event.add("attendee", attendee2)
+
+    cal.add_component(event)
+    return cal
+
+
+@pytest.fixture
+def event_with_recurrence():
+    """Create recurring event with RRULE."""
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Weekly Standup")
+    event.add("dtstart", datetime(2024, 1, 1, 9, 0, 0))
+    event.add("dtend", datetime(2024, 1, 1, 9, 30, 0))
+    event.add("rrule", {"freq": "WEEKLY", "byday": "MO", "count": 10})
+    event.add("exdate", datetime(2024, 1, 8, 9, 0, 0))
+    event.add("rdate", datetime(2024, 1, 9, 9, 0, 0))
+    cal.add_component(event)
+    return cal
+
+
+# Property Preservation Tests
+
+
+def test_preserves_dtstart(simple_event):
+    """DTSTART should be preserved exactly."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["dtstart"].to_ical() == b"20240115T140000"
+
+
+def test_preserves_dtend(simple_event):
+    """DTEND should be preserved exactly."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["dtend"].to_ical() == b"20240115T150000"
+
+
+def test_preserves_rrule(event_with_recurrence):
+    """RRULE should be preserved exactly."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_recurrence)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    rrule = event["rrule"]
+    assert rrule["FREQ"] == "WEEKLY"
+    assert rrule["BYDAY"] == "MO"
+    assert rrule["COUNT"] == 10
+
+
+def test_preserves_exdate(event_with_recurrence):
+    """EXDATE should be preserved exactly."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_recurrence)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["exdate"].to_ical() == b"20240108T090000"
+
+
+def test_preserves_rdate(event_with_recurrence):
+    """RDATE should be preserved exactly."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_recurrence)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["rdate"].to_ical() == b"20240109T090000"
+
+
+def test_preserves_sequence():
+    """SEQUENCE should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Updated Meeting")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("sequence", 3)
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["sequence"] == 3
+
+
+def test_preserves_status():
+    """STATUS should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Confirmed Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("status", "CONFIRMED")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["status"] == "CONFIRMED"
+
+
+def test_preserves_transp():
+    """TRANSP should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Busy Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("transp", "OPAQUE")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["transp"] == "OPAQUE"
+
+
+def test_preserves_class():
+    """CLASS should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Private Meeting")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("class", "PRIVATE")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["class"] == "PRIVATE"
+
+
+def test_preserves_priority():
+    """PRIORITY should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Important Task")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("priority", 1)
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["priority"] == 1
+
+
+def test_anonymizes_categories():
+    """CATEGORIES should be anonymized (default-deny for personal data)."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Work Meeting")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("categories", ["WORK", "MEETING"])
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    # CATEGORIES should be anonymized
+    categories = anon_event.get("categories")
+    assert categories is not None, "CATEGORIES should be preserved (but anonymized)"
+    assert categories.to_ical() != b"WORK,MEETING"
+
+
+def test_preserves_duration():
+    """DURATION should be preserved."""
+    from datetime import timedelta
+
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Timed Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("duration", timedelta(hours=2))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["duration"].to_ical() == b"PT2H"
+
+
+def test_preserves_dtstamp():
+    """DTSTAMP should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Stamped Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("dtstamp", datetime(2024, 1, 10, 12, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["dtstamp"].to_ical() == b"20240110T120000Z"
+
+
+def test_preserves_due_in_todo():
+    """DUE should be preserved in VTODO."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    todo = Todo()
+    todo.add("summary", "Complete report")
+    todo.add("due", datetime(2024, 1, 20, 17, 0, 0))
+    cal.add_component(todo)
+
+    anon_cal = anonymize(cal)
+    anon_todo = next(iter(anon_cal.walk("VTODO")))
+
+    assert anon_todo["due"].to_ical() == b"20240120T170000"
+
+
+# Property Anonymization Tests
+
+
+def test_anonymizes_summary(simple_event):
+    """SUMMARY should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["summary"] != "Team Meeting"
+    assert len(str(event["summary"])) > 0
+
+
+def test_anonymizes_description(simple_event):
+    """DESCRIPTION should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["description"] != "Discuss project roadmap and timeline"
+    assert len(str(event["description"])) > 0
+
+
+def test_anonymizes_location(simple_event):
+    """LOCATION should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["location"] != "Conference Room A"
+    assert len(str(event["location"])) > 0
+
+
+def test_anonymizes_comment():
+    """COMMENT should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("comment", "This is a private note")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["comment"] != "This is a private note"
+
+
+def test_anonymizes_contact():
+    """CONTACT should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("contact", "John Doe, 555-1234")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["contact"] != "John Doe, 555-1234"
+
+
+def test_preserves_word_count_in_summary(simple_event):
+    """Anonymized SUMMARY should preserve word count."""
+    from icalendar_anonymizer import anonymize
+
+    original_words = len(["Team", "Meeting"])
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+    anon_words = len(str(event["summary"]).split())
+
+    assert anon_words == original_words
+
+
+def test_preserves_word_count_in_description(simple_event):
+    """Anonymized DESCRIPTION should preserve word count."""
+    from icalendar_anonymizer import anonymize
+
+    original_words = len(["Discuss", "project", "roadmap", "and", "timeline"])
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+    anon_words = len(str(event["description"]).split())
+
+    assert anon_words == original_words
+
+
+def test_anonymizes_organizer_email(event_with_attendees):
+    """ORGANIZER email should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_attendees)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    organizer = str(event["organizer"])
+    assert "john.doe@example.com" not in organizer
+    assert organizer.startswith("mailto:")
+
+
+def test_anonymizes_organizer_cn(event_with_attendees):
+    """ORGANIZER CN parameter should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_attendees)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    cn = event["organizer"].params.get("cn", "")
+    assert cn != "John Doe"
+
+
+def test_preserves_mailto_prefix_in_organizer(event_with_attendees):
+    """ORGANIZER should preserve mailto: prefix."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_attendees)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    organizer = str(event["organizer"])
+    assert organizer.startswith("mailto:")
+
+
+def test_anonymizes_attendee_emails(event_with_attendees):
+    """ATTENDEE emails should be anonymized."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_attendees)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    attendees = event.get("attendee", [])
+    if not isinstance(attendees, list):
+        attendees = [attendees]
+
+    for attendee in attendees:
+        attendee_str = str(attendee)
+        assert "jane.smith@example.com" not in attendee_str
+        assert "bob.jones@company.org" not in attendee_str
+        assert attendee_str.startswith("mailto:")
+
+
+def test_preserves_attendee_parameters(event_with_attendees):
+    """ATTENDEE non-CN parameters should be preserved."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(event_with_attendees)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    attendees = event.get("attendee", [])
+    if not isinstance(attendees, list):
+        attendees = [attendees]
+
+    # Check that ROLE and PARTSTAT are preserved
+    roles = [a.params.get("role") for a in attendees if "role" in a.params]
+    partstats = [a.params.get("partstat") for a in attendees if "partstat" in a.params]
+
+    assert "REQ-PARTICIPANT" in roles
+    assert "ACCEPTED" in partstats
+
+
+# UID Handling Tests
+
+
+def test_uid_is_hashed(simple_event):
+    """UID should be hashed, not preserved."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal = anonymize(simple_event)
+    event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert event["uid"] != "original-uid-12345@example.com"
+
+
+def test_uid_uniqueness_preserved():
+    """Different UIDs should remain different after anonymization."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+
+    event1 = Event()
+    event1.add("summary", "Event 1")
+    event1.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event1.add("uid", "uid-1@example.com")
+    cal.add_component(event1)
+
+    event2 = Event()
+    event2.add("summary", "Event 2")
+    event2.add("dtstart", datetime(2024, 1, 15, 15, 0, 0))
+    event2.add("uid", "uid-2@example.com")
+    cal.add_component(event2)
+
+    anon_cal = anonymize(cal)
+    events = list(anon_cal.walk("VEVENT"))
+
+    assert events[0]["uid"] != events[1]["uid"]
+
+
+def test_same_uid_produces_same_hash():
+    """Same UID within calendar should produce same hash."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+
+    # Events with same UID (e.g., instances of recurring event)
+    event1 = Event()
+    event1.add("summary", "Instance 1")
+    event1.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event1.add("uid", "recurring-event@example.com")
+    event1.add("recurrence-id", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event1)
+
+    event2 = Event()
+    event2.add("summary", "Instance 2")
+    event2.add("dtstart", datetime(2024, 1, 22, 14, 0, 0))
+    event2.add("uid", "recurring-event@example.com")
+    event2.add("recurrence-id", datetime(2024, 1, 22, 14, 0, 0))
+    cal.add_component(event2)
+
+    anon_cal = anonymize(cal)
+    events = list(anon_cal.walk("VEVENT"))
+
+    assert events[0]["uid"] == events[1]["uid"]
+
+
+def test_different_salt_produces_different_hash(simple_event):
+    """Different anonymization runs should produce different hashes."""
+    from icalendar_anonymizer import anonymize
+
+    anon_cal1 = anonymize(simple_event)
+    anon_cal2 = anonymize(simple_event)
+
+    event1 = next(iter(anon_cal1.walk("VEVENT")))
+    event2 = next(iter(anon_cal2.walk("VEVENT")))
+
+    # Different runs use different salts, so hashes differ
+    assert event1["uid"] != event2["uid"]
+
+
+# Unknown Property Tests
+
+
+def test_anonymizes_unknown_x_property():
+    """Unknown X- properties should be anonymized (default-deny)."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("x-custom-field", "sensitive data")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    # X-CUSTOM-FIELD should be anonymized
+    custom_field = anon_event.get("x-custom-field")
+    assert custom_field is not None, "X-CUSTOM-FIELD should be preserved (but anonymized)"
+    assert str(custom_field) != "sensitive data"
+
+
+def test_anonymizes_unknown_standard_property():
+    """Unknown standard properties should be anonymized (safe default)."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Event")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    # Add a hypothetical future standard property
+    event.add("future-property", "unknown value")
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    future_prop = anon_event.get("future-property")
+    assert future_prop is not None, "FUTURE-PROPERTY should be preserved (but anonymized)"
+    assert str(future_prop) != "unknown value"
+
+
+# Edge Cases
+
+
+def test_empty_calendar():
+    """Empty calendar should not crash."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    anon_cal = anonymize(cal)
+
+    assert anon_cal is not None
+    assert len(list(anon_cal.walk())) > 0  # At least VCALENDAR component
+
+
+def test_calendar_with_only_vtimezone():
+    """Calendar with only VTIMEZONE should work."""
+    from icalendar.cal import Timezone, TimezoneStandard
+
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    tz = Timezone()
+    tz.add("tzid", "America/New_York")
+
+    standard = TimezoneStandard()
+    standard.add("dtstart", datetime(1970, 11, 1, 2, 0, 0))
+    standard.add("tzoffsetfrom", timedelta(hours=-4))
+    standard.add("tzoffsetto", timedelta(hours=-5))
+    tz.add_component(standard)
+
+    cal.add_component(tz)
+
+    anon_cal = anonymize(cal)
+    anon_tz = next(iter(anon_cal.walk("VTIMEZONE")))
+
+    # VTIMEZONE should be completely preserved
+    assert anon_tz["tzid"] == "America/New_York"
+
+
+def test_handles_multibyte_utf8():
+    """Should handle multi-byte UTF-8 characters correctly."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "会議 ミーティング 🎉")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    # Should not crash and should produce valid output
+    assert anon_event["summary"] is not None
+    assert len(str(anon_event["summary"])) > 0
