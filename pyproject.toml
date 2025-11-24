@@ -122,6 +122,7 @@ ignore = [
     "C901",    # {name} is too complex ({complexity} > {max_complexity})
     "COM812",  # Trailing comma missing
     "D1",      # Missing docstring
+    "PLC0415", # Import should be at top-level (common pattern in pytest)
     "D2",      # docstrings stuffs
     "D4",      # docstrings stuffs
     "EM10",    # Exception string usage
