@@ -680,3 +680,51 @@ def test_preserve_in_subcomponents():
     anon_alarm = next(iter(anon_event.walk("VALARM")))
 
     assert anon_alarm["description"] == "Alarm description"
+
+
+def test_preserve_type_validation_rejects_string():
+    """preserve parameter must be a set, not a string."""
+    import pytest
+
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Test")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    with pytest.raises(TypeError, match="preserve must be a set or None, got str"):
+        anonymize(cal, preserve="LOCATION")
+
+
+def test_preserve_type_validation_rejects_list():
+    """preserve parameter must be a set, not a list."""
+    import pytest
+
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Test")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    with pytest.raises(TypeError, match="preserve must be a set or None, got list"):
+        anonymize(cal, preserve=["LOCATION"])
+
+
+def test_preserve_type_validation_rejects_tuple():
+    """preserve parameter must be a set, not a tuple."""
+    import pytest
+
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Test")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    with pytest.raises(TypeError, match="preserve must be a set or None, got tuple"):
+        anonymize(cal, preserve=("LOCATION",))

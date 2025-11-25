@@ -69,6 +69,9 @@ def anonymize(
     elif not isinstance(salt, bytes):
         raise TypeError(f"salt must be bytes, got {type(salt).__name__}")
 
+    if preserve is not None and not isinstance(preserve, set):
+        raise TypeError(f"preserve must be a set or None, got {type(preserve).__name__}")
+
     # Normalize preserve set to uppercase
     preserve_upper = {p.upper() for p in preserve} if preserve else set()
 
