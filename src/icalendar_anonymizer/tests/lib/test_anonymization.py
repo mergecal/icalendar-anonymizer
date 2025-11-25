@@ -1,4 +1,6 @@
+# SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
 # SPDX-License-Identifier: AGPL-3.0-or-later
+
 """Tests for core anonymization functionality.
 
 Test suite for Issues #1 and #2:

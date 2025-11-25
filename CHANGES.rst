@@ -1,3 +1,6 @@
+.. SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
+.. SPDX-License-Identifier: AGPL-3.0-or-later
+
 ==========
 Change log
 ==========
@@ -59,6 +62,7 @@ New features
 - Added :file:`CONTRIBUTING.md` with development workflow, commit message format, testing requirements, and project structure. See `Issue 15 <https://github.com/mergecal/icalendar-anonymizer/issues/15>`_.
 - Added :file:`README.md` with installation instructions and usage examples for Python API, CLI, and web service. See `Issue 13 <https://github.com/mergecal/icalendar-anonymizer/issues/13>`_.
 - Added :file:`pyproject.toml` with hatchling build system, hatch-vcs version management, package structure, and dependencies. Tests included in package at ``src/icalendar_anonymizer/tests/``. See `Issue 12 <https://github.com/mergecal/icalendar-anonymizer/issues/12>`_.
+- Added REUSE specification compliance with SPDX headers to all source files, configuration files, documentation, and workflows. Added :file:`.github/workflows/reuse.yml` for automated CI compliance checking and ``reuse`` hook to :file:`.pre-commit-config.yaml` for local validation. Downloaded :file:`LICENSES/AGPL-3.0-or-later.txt`. Project is fully compliant with REUSE 3.3 specification for clear licensing. See `Issue 22 <https://github.com/mergecal/icalendar-anonymizer/issues/22>`_.
 
 Bug fixes
 '''''''''
