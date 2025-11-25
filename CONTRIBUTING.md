@@ -129,6 +129,54 @@ pre-commit autoupdate
 - Update `CHANGES.rst` with your changes
 - Follow conventional commit format for PR title
 
+## Code Style Guidelines
+
+### Docstrings
+
+Use Google-style docstrings with multi-line format:
+
+```python
+def function(arg1: str, arg2: int) -> str:
+    """Brief description on first line.
+
+    More detailed explanation if needed. Can span multiple paragraphs.
+
+    Args:
+        arg1: Description of first argument
+        arg2: Description of second argument
+
+    Returns:
+        Description of return value
+
+    Raises:
+        ValueError: When invalid input provided
+    """
+```
+
+Don't include Examples sections unless they contain real, testable doctests.
+
+### Test Organization
+
+Use `pytest.mark.parametrize` for duplicate test patterns:
+
+```python
+@pytest.mark.parametrize(
+    ("property_name", "expected_value"),
+    [
+        ("status", "CONFIRMED"),
+        ("priority", 1),
+    ],
+)
+def test_preserves_metadata(property_name, expected_value):
+    """Test implementation."""
+```
+
+Organize tests into logical groups with clear section comments.
+
+### Imports
+
+Standard imports at top, group by: standard library, third-party, local. Sort alphabetically within groups.
+
 ## Documentation
 
 Update `CHANGES.rst` for user-facing changes. See the file header for formatting guidelines.
