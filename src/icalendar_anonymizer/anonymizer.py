@@ -60,13 +60,6 @@ def anonymize(
 
     Raises:
         TypeError: If cal is not a Calendar object or salt is not bytes
-
-    Examples:
-        >>> from icalendar import Calendar
-        >>> cal = Calendar.from_ical(ics_data)
-        >>> anon_cal = anonymize(cal)  # Random salt
-        >>> # Or with fixed salt for reproducible output:
-        >>> anon_cal = anonymize(cal, salt=b"my-secret-salt")
     """
     if not isinstance(cal, Calendar):
         raise TypeError(f"Expected Calendar, got {type(cal).__name__}")
