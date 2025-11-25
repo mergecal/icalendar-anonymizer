@@ -542,3 +542,141 @@ def test_handles_multibyte_utf8():
     # Should not crash and should produce valid output
     assert anon_event["summary"] is not None
     assert len(str(anon_event["summary"])) > 0
+
+
+# Preserve Parameter Tests
+
+
+def test_preserve_additional_property():
+    """preserve parameter should preserve specified properties."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Team Meeting")
+    event.add("location", "Conference Room A")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve={"LOCATION"})
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["summary"] != "Team Meeting"
+    assert anon_event["location"] == "Conference Room A"
+
+
+def test_preserve_case_insensitive():
+    """preserve parameter should be case-insensitive."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Meeting")
+    event.add("location", "Room A")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve={"location", "Location", "LOCATION"})
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["location"] == "Room A"
+
+
+def test_preserve_multiple_properties():
+    """preserve parameter can preserve multiple properties."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Meeting")
+    event.add("location", "Room A")
+    event.add("comment", "Important note")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve={"LOCATION", "COMMENT"})
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["summary"] != "Meeting"
+    assert anon_event["location"] == "Room A"
+    assert anon_event["comment"] == "Important note"
+
+
+def test_preserve_categories():
+    """preserve can be used to preserve CATEGORIES."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Work Meeting")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    event.add("categories", ["WORK", "MEETING"])
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve={"CATEGORIES"})
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    categories = anon_event.get("categories")
+    assert categories.to_ical() == b"WORK,MEETING"
+
+
+def test_preserve_empty_set():
+    """preserve with empty set should work like no preserve."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Meeting")
+    event.add("location", "Room A")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve=set())
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["summary"] != "Meeting"
+    assert anon_event["location"] != "Room A"
+
+
+def test_preserve_none():
+    """preserve=None should work like default behavior."""
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Meeting")
+    event.add("location", "Room A")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve=None)
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+
+    assert anon_event["summary"] != "Meeting"
+    assert anon_event["location"] != "Room A"
+
+
+def test_preserve_in_subcomponents():
+    """preserve should apply to subcomponents like VALARM."""
+    from icalendar import Alarm
+
+    from icalendar_anonymizer import anonymize
+
+    cal = Calendar()
+    event = Event()
+    event.add("summary", "Event with Alarm")
+    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
+
+    alarm = Alarm()
+    alarm.add("action", "DISPLAY")
+    alarm.add("description", "Alarm description")
+    alarm.add("trigger", timedelta(minutes=-15))
+    event.add_component(alarm)
+
+    cal.add_component(event)
+
+    anon_cal = anonymize(cal, preserve={"DESCRIPTION"})
+    anon_event = next(iter(anon_cal.walk("VEVENT")))
+    anon_alarm = next(iter(anon_event.walk("VALARM")))
+
+    assert anon_alarm["description"] == "Alarm description"
