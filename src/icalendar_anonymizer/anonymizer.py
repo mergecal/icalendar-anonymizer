@@ -22,6 +22,19 @@ from ._properties import (
 )
 
 
+def _should_preserve(prop_name: str, preserve_set: set[str]) -> bool:
+    """Check if a property should be preserved.
+
+    Args:
+        prop_name: Property name (uppercase)
+        preserve_set: Set of additional properties to preserve (uppercase)
+
+    Returns:
+        True if property should be preserved
+    """
+    return should_preserve_property(prop_name) or prop_name in preserve_set
+
+
 def anonymize(
     cal: Calendar,
     salt: bytes | None = None,
@@ -75,7 +88,7 @@ def anonymize(
     # Copy calendar-level properties (applying same filtering rules)
     for key, value in cal.property_items():
         prop_name = key.upper()
-        if should_preserve_property(prop_name) or prop_name in preserve_upper:
+        if _should_preserve(prop_name, preserve_upper):
             new_cal.add(key, value)
         else:
             # Anonymize calendar-level properties too
@@ -129,7 +142,7 @@ def _anonymize_component(
         prop_name = key.upper()
 
         # Check if property should be preserved
-        if should_preserve_property(prop_name) or prop_name in preserve:
+        if _should_preserve(prop_name, preserve):
             # Preserve as-is
             new_component.add(key, value)
         elif prop_name == "UID":
