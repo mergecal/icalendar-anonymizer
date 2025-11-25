@@ -78,24 +78,21 @@ def event_with_recurrence():
 # Property Preservation Tests
 
 
-def test_preserves_dtstart(simple_event):
-    """DTSTART should be preserved exactly."""
+@pytest.mark.parametrize(
+    ("property_name", "expected_ical"),
+    [
+        ("dtstart", b"20240115T140000"),
+        ("dtend", b"20240115T150000"),
+    ],
+)
+def test_preserves_datetime_properties(simple_event, property_name, expected_ical):
+    """Date/time properties should be preserved exactly."""
     from icalendar_anonymizer import anonymize
 
     anon_cal = anonymize(simple_event)
     event = next(iter(anon_cal.walk("VEVENT")))
 
-    assert event["dtstart"].to_ical() == b"20240115T140000"
-
-
-def test_preserves_dtend(simple_event):
-    """DTEND should be preserved exactly."""
-    from icalendar_anonymizer import anonymize
-
-    anon_cal = anonymize(simple_event)
-    event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert event["dtend"].to_ical() == b"20240115T150000"
+    assert event[property_name].to_ical() == expected_ical
 
 
 def test_preserves_rrule(event_with_recurrence):
@@ -111,109 +108,48 @@ def test_preserves_rrule(event_with_recurrence):
     assert rrule["COUNT"] == 10
 
 
-def test_preserves_exdate(event_with_recurrence):
-    """EXDATE should be preserved exactly."""
+@pytest.mark.parametrize(
+    ("property_name", "expected_ical"),
+    [
+        ("exdate", b"20240108T090000"),
+        ("rdate", b"20240109T090000"),
+    ],
+)
+def test_preserves_recurrence_dates(event_with_recurrence, property_name, expected_ical):
+    """Recurrence date properties should be preserved exactly."""
     from icalendar_anonymizer import anonymize
 
     anon_cal = anonymize(event_with_recurrence)
     event = next(iter(anon_cal.walk("VEVENT")))
 
-    assert event["exdate"].to_ical() == b"20240108T090000"
+    assert event[property_name].to_ical() == expected_ical
 
 
-def test_preserves_rdate(event_with_recurrence):
-    """RDATE should be preserved exactly."""
-    from icalendar_anonymizer import anonymize
-
-    anon_cal = anonymize(event_with_recurrence)
-    event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert event["rdate"].to_ical() == b"20240109T090000"
-
-
-def test_preserves_sequence():
-    """SEQUENCE should be preserved."""
+@pytest.mark.parametrize(
+    ("property_name", "property_value", "expected_value"),
+    [
+        ("sequence", 3, 3),
+        ("status", "CONFIRMED", "CONFIRMED"),
+        ("transp", "OPAQUE", "OPAQUE"),
+        ("class", "PRIVATE", "PRIVATE"),
+        ("priority", 1, 1),
+    ],
+)
+def test_preserves_metadata_properties(property_name, property_value, expected_value):
+    """Metadata properties should be preserved exactly."""
     from icalendar_anonymizer import anonymize
 
     cal = Calendar()
     event = Event()
-    event.add("summary", "Updated Meeting")
+    event.add("summary", "Test Event")
     event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
-    event.add("sequence", 3)
+    event.add(property_name, property_value)
     cal.add_component(event)
 
     anon_cal = anonymize(cal)
     anon_event = next(iter(anon_cal.walk("VEVENT")))
 
-    assert anon_event["sequence"] == 3
-
-
-def test_preserves_status():
-    """STATUS should be preserved."""
-    from icalendar_anonymizer import anonymize
-
-    cal = Calendar()
-    event = Event()
-    event.add("summary", "Confirmed Event")
-    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
-    event.add("status", "CONFIRMED")
-    cal.add_component(event)
-
-    anon_cal = anonymize(cal)
-    anon_event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert anon_event["status"] == "CONFIRMED"
-
-
-def test_preserves_transp():
-    """TRANSP should be preserved."""
-    from icalendar_anonymizer import anonymize
-
-    cal = Calendar()
-    event = Event()
-    event.add("summary", "Busy Event")
-    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
-    event.add("transp", "OPAQUE")
-    cal.add_component(event)
-
-    anon_cal = anonymize(cal)
-    anon_event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert anon_event["transp"] == "OPAQUE"
-
-
-def test_preserves_class():
-    """CLASS should be preserved."""
-    from icalendar_anonymizer import anonymize
-
-    cal = Calendar()
-    event = Event()
-    event.add("summary", "Private Meeting")
-    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
-    event.add("class", "PRIVATE")
-    cal.add_component(event)
-
-    anon_cal = anonymize(cal)
-    anon_event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert anon_event["class"] == "PRIVATE"
-
-
-def test_preserves_priority():
-    """PRIORITY should be preserved."""
-    from icalendar_anonymizer import anonymize
-
-    cal = Calendar()
-    event = Event()
-    event.add("summary", "Important Task")
-    event.add("dtstart", datetime(2024, 1, 15, 14, 0, 0))
-    event.add("priority", 1)
-    cal.add_component(event)
-
-    anon_cal = anonymize(cal)
-    anon_event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert anon_event["priority"] == 1
+    assert anon_event[property_name] == expected_value
 
 
 def test_anonymizes_categories():
@@ -291,37 +227,23 @@ def test_preserves_due_in_todo():
 # Property Anonymization Tests
 
 
-def test_anonymizes_summary(simple_event):
-    """SUMMARY should be anonymized."""
+@pytest.mark.parametrize(
+    ("property_name", "original_value"),
+    [
+        ("summary", "Team Meeting"),
+        ("description", "Discuss project roadmap and timeline"),
+        ("location", "Conference Room A"),
+    ],
+)
+def test_anonymizes_text_properties(simple_event, property_name, original_value):
+    """Text properties should be anonymized."""
     from icalendar_anonymizer import anonymize
 
     anon_cal = anonymize(simple_event)
     event = next(iter(anon_cal.walk("VEVENT")))
 
-    assert event["summary"] != "Team Meeting"
-    assert len(str(event["summary"])) > 0
-
-
-def test_anonymizes_description(simple_event):
-    """DESCRIPTION should be anonymized."""
-    from icalendar_anonymizer import anonymize
-
-    anon_cal = anonymize(simple_event)
-    event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert event["description"] != "Discuss project roadmap and timeline"
-    assert len(str(event["description"])) > 0
-
-
-def test_anonymizes_location(simple_event):
-    """LOCATION should be anonymized."""
-    from icalendar_anonymizer import anonymize
-
-    anon_cal = anonymize(simple_event)
-    event = next(iter(anon_cal.walk("VEVENT")))
-
-    assert event["location"] != "Conference Room A"
-    assert len(str(event["location"])) > 0
+    assert event[property_name] != original_value
+    assert len(str(event[property_name])) > 0
 
 
 def test_anonymizes_comment():
@@ -358,30 +280,17 @@ def test_anonymizes_contact():
     assert anon_event["contact"] != "John Doe, 555-1234"
 
 
-def test_preserves_word_count_in_summary(simple_event):
-    """Anonymized SUMMARY should preserve word count."""
+@pytest.mark.parametrize("property_name", ["summary", "description"])
+def test_preserves_word_count(simple_event, property_name):
+    """Anonymized text properties should preserve word count."""
     from icalendar_anonymizer import anonymize
 
-    original_summary = next(iter(simple_event.walk("VEVENT")))["summary"]
-    original_words = len(str(original_summary).split())
+    original_property = next(iter(simple_event.walk("VEVENT")))[property_name]
+    original_words = len(str(original_property).split())
 
     anon_cal = anonymize(simple_event)
     event = next(iter(anon_cal.walk("VEVENT")))
-    anon_words = len(str(event["summary"]).split())
-
-    assert anon_words == original_words
-
-
-def test_preserves_word_count_in_description(simple_event):
-    """Anonymized DESCRIPTION should preserve word count."""
-    from icalendar_anonymizer import anonymize
-
-    original_description = next(iter(simple_event.walk("VEVENT")))["description"]
-    original_words = len(str(original_description).split())
-
-    anon_cal = anonymize(simple_event)
-    event = next(iter(anon_cal.walk("VEVENT")))
-    anon_words = len(str(event["description"]).split())
+    anon_words = len(str(event[property_name]).split())
 
     assert anon_words == original_words
 
