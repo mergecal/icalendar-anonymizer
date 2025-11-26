@@ -22,7 +22,24 @@ from ._properties import (
 )
 
 
-def anonymize(cal: Calendar, salt: bytes | None = None) -> Calendar:
+def _should_preserve(prop_name: str, preserve_set: set[str]) -> bool:
+    """Check if a property should be preserved.
+
+    Args:
+        prop_name: Property name (uppercase)
+        preserve_set: Set of additional properties to preserve (uppercase)
+
+    Returns:
+        True if property should be preserved
+    """
+    return should_preserve_property(prop_name) or prop_name in preserve_set
+
+
+def anonymize(
+    cal: Calendar,
+    salt: bytes | None = None,
+    preserve: set[str] | None = None,
+) -> Calendar:
     """Anonymize an iCalendar object.
 
     Removes personal data (names, emails, locations, descriptions) while
@@ -34,19 +51,15 @@ def anonymize(cal: Calendar, salt: bytes | None = None) -> Calendar:
         cal: The Calendar object to anonymize
         salt: Optional salt for hashing. If None, generates random salt.
               Pass the same salt to get consistent output across runs.
+        preserve: Optional set of additional property names to preserve.
+                 Case-insensitive. User must ensure these don't contain
+                 sensitive data. Example: {"CATEGORIES", "COMMENT"}
 
     Returns:
         New anonymized Calendar object
 
     Raises:
         TypeError: If cal is not a Calendar object or salt is not bytes
-
-    Examples:
-        >>> from icalendar import Calendar
-        >>> cal = Calendar.from_ical(ics_data)
-        >>> anon_cal = anonymize(cal)  # Random salt
-        >>> # Or with fixed salt for reproducible output:
-        >>> anon_cal = anonymize(cal, salt=b"my-secret-salt")
     """
     if not isinstance(cal, Calendar):
         raise TypeError(f"Expected Calendar, got {type(cal).__name__}")
@@ -55,6 +68,12 @@ def anonymize(cal: Calendar, salt: bytes | None = None) -> Calendar:
         salt = generate_salt()
     elif not isinstance(salt, bytes):
         raise TypeError(f"salt must be bytes, got {type(salt).__name__}")
+
+    if preserve is not None and not isinstance(preserve, set):
+        raise TypeError(f"preserve must be a set or None, got {type(preserve).__name__}")
+
+    # Normalize preserve set to uppercase
+    preserve_upper = {p.upper() for p in preserve} if preserve else set()
 
     # UID mapping to maintain uniqueness across calendar
     uid_map: dict[str, str] = {}
@@ -65,7 +84,7 @@ def anonymize(cal: Calendar, salt: bytes | None = None) -> Calendar:
     # Copy calendar-level properties (applying same filtering rules)
     for key, value in cal.property_items():
         prop_name = key.upper()
-        if should_preserve_property(prop_name):
+        if _should_preserve(prop_name, preserve_upper):
             new_cal.add(key, value)
         else:
             # Anonymize calendar-level properties too
@@ -81,19 +100,25 @@ def anonymize(cal: Calendar, salt: bytes | None = None) -> Calendar:
             continue
 
         # Anonymize component
-        new_component = _anonymize_component(component, salt, uid_map)
+        new_component = _anonymize_component(component, salt, uid_map, preserve_upper)
         new_cal.add_component(new_component)
 
     return new_cal
 
 
-def _anonymize_component(component: Component, salt: bytes, uid_map: dict[str, str]) -> Component:
+def _anonymize_component(
+    component: Component,
+    salt: bytes,
+    uid_map: dict[str, str],
+    preserve: set[str],
+) -> Component:
     """Anonymize a single component (VEVENT, VTODO, etc.).
 
     Args:
         component: The component to anonymize
         salt: Salt for hashing
         uid_map: UID mapping for maintaining uniqueness
+        preserve: Set of additional property names to preserve (uppercase)
 
     Returns:
         New anonymized component
@@ -113,7 +138,7 @@ def _anonymize_component(component: Component, salt: bytes, uid_map: dict[str, s
         prop_name = key.upper()
 
         # Check if property should be preserved
-        if should_preserve_property(prop_name):
+        if _should_preserve(prop_name, preserve):
             # Preserve as-is
             new_component.add(key, value)
         elif prop_name == "UID":
@@ -137,7 +162,7 @@ def _anonymize_component(component: Component, salt: bytes, uid_map: dict[str, s
 
     # Process subcomponents (e.g., VALARM inside VEVENT)
     for subcomponent in component.subcomponents:
-        new_subcomponent = _anonymize_component(subcomponent, salt, uid_map)
+        new_subcomponent = _anonymize_component(subcomponent, salt, uid_map, preserve)
         new_component.add_component(new_subcomponent)
 
     return new_component

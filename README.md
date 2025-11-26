@@ -57,6 +57,13 @@ with open('calendar.ics', 'rb') as f:
 # Anonymize
 anonymized_cal = anonymize(cal)
 
+# Preserve specific properties (e.g., CATEGORIES for bug reproduction)
+anonymized_cal = anonymize(cal, preserve={"CATEGORIES", "LOCATION"})
+
+# Deterministic output with fixed salt
+salt = b"reproducible-salt-for-testing"
+anonymized_cal = anonymize(cal, salt=salt)
+
 # Save
 with open('anonymized.ics', 'wb') as f:
     f.write(anonymized_cal.to_ical())
@@ -128,7 +135,13 @@ Runs on port 8000 by default. Includes SSRF protection (blocks localhost and pri
 - VTIMEZONE, TZID, TZOFFSETFROM, TZOFFSETTO
 - UID (hashed but unique)
 - SEQUENCE, STATUS, TRANSP, CLASS, PRIORITY
-- CATEGORIES
+
+**Custom preservation:**
+Use `preserve` parameter to keep specific properties:
+```python
+anonymize(cal, preserve={"CATEGORIES", "COMMENT"})
+```
+User responsibility to ensure preserved properties don't contain sensitive data.
 
 ## Contributing
 
