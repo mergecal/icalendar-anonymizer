@@ -67,10 +67,6 @@ dev = [
 
 doc = [
     "sphinx>=8.2",
-    "sphinx-autobuild>=2024.10.3",
-    "sphinx-copybutton>=0.5.2",
-    "pydata-sphinx-theme>=0.16.0",
-    "myst-parser>=4.0",
 ]
 
 test = ["pytest>=9.0", "pytest-cov>=6.0", "coverage>=7.11", "hypothesis>=6.147"]
@@ -157,6 +153,9 @@ extend-safe-fixes = [
     "SLF001", # Private member accessed
     "N999",   # module name
     "PT027",  # assertRaises
+]
+"docs/*" = [
+    "INP001", # implicit namespace package
 ]
 
 [tool.pytest.ini_options]
