@@ -158,6 +158,9 @@ extend-safe-fixes = [
     "N999",   # module name
     "PT027",  # assertRaises
 ]
+"docs/*" = [
+    "INP001", # implicit namespace package
+]
 
 [tool.pytest.ini_options]
 minversion = "7.0"
