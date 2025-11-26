@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 repos:
   # Ruff - Python linting and formatting
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -32,3 +35,9 @@ repos:
     hooks:
       - id: commitizen
         stages: [commit-msg]
+
+  # REUSE specification compliance
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v6.2.0
+    hooks:
+      - id: reuse

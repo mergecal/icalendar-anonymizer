@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 version_provider = "pep621"
@@ -6,22 +9,22 @@ tag_format = "$version"
 [tool.commitizen.customize]
 message_template = "{{change_type}}{% if scope %}({{scope}}){% endif %}: {{message}}"
 bump_pattern = "^(feat|fix|refactor|perf)"
-bump_map = {"feat" = "MINOR", "fix" = "PATCH", "refactor" = "PATCH", "perf" = "PATCH"}
+bump_map = { "feat" = "MINOR", "fix" = "PATCH", "refactor" = "PATCH", "perf" = "PATCH" }
 
 [[tool.commitizen.customize.questions]]
 type = "list"
 name = "change_type"
 message = "Select the type of change you are committing"
 choices = [
-    {value = "feat", name = "feat: A new feature"},
-    {value = "fix", name = "fix: A bug fix"},
-    {value = "docs", name = "docs: Documentation only changes"},
-    {value = "style", name = "style: Code style changes (formatting, semicolons, etc)"},
-    {value = "refactor", name = "refactor: Code change that neither fixes a bug nor adds a feature"},
-    {value = "perf", name = "perf: Performance improvements"},
-    {value = "test", name = "test: Adding or updating tests"},
-    {value = "build", name = "build: Build system or dependency changes"},
-    {value = "ci", name = "ci: CI configuration changes"},
-    {value = "chore", name = "chore: Other changes that don't modify src or test files"},
-    {value = "revert", name = "revert: Revert a previous commit"}
+    { value = "feat", name = "feat: A new feature" },
+    { value = "fix", name = "fix: A bug fix" },
+    { value = "docs", name = "docs: Documentation only changes" },
+    { value = "style", name = "style: Code style changes (formatting, semicolons, etc)" },
+    { value = "refactor", name = "refactor: Code change that neither fixes a bug nor adds a feature" },
+    { value = "perf", name = "perf: Performance improvements" },
+    { value = "test", name = "test: Adding or updating tests" },
+    { value = "build", name = "build: Build system or dependency changes" },
+    { value = "ci", name = "ci: CI configuration changes" },
+    { value = "chore", name = "chore: Other changes that don't modify src or test files" },
+    { value = "revert", name = "revert: Revert a previous commit" },
 ]

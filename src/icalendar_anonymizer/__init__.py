@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 """icalendar-anonymizer - Strip personal data from iCalendar files.
 
 This package provides tools to anonymize iCalendar data while preserving
