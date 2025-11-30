@@ -21,10 +21,12 @@ keywords = [
 authors = [
     { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Sashank Bhamidi", email = "hello@sashank.wiki" },
+    { name = "Abe Hanoka", email = "abe@habet.dev" },
 ]
 maintainers = [
     { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Sashank Bhamidi", email = "hello@sashank.wiki" },
+    { name = "Abe Hanoka", email = "abe@habet.dev" },
 ]
 dynamic = ["urls", "version"]
 description = "Strip personal data from iCalendar files while preserving technical properties for bug reproduction"
