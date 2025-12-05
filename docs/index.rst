@@ -93,23 +93,17 @@ Documentation
 =============
 
 .. toctree::
-    :maxdepth: 2
-    :caption: User Guide
+    :maxdepth: 1
 
     installation
     usage/python-api
-
-.. toctree::
-    :maxdepth: 2
-    :caption: Reference
-
     api/index
-    changelog
 
 .. toctree::
     :maxdepth: 1
-    :caption: Development
+    :hidden:
 
+    changelog
     contributing
 
 Project Information
