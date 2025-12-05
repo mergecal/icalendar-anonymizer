@@ -26,6 +26,9 @@ html_theme_options = {
     "use_edit_page_button": True,
     "show_toc_level": 2,
     "navbar_align": "left",
+    "show_nav_level": 1,
+    "navigation_with_keys": True,
+    "collapse_navigation": False,
 }
 
 html_context = {

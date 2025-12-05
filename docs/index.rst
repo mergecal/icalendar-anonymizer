@@ -111,7 +111,6 @@ Documentation
     :caption: Development
 
     contributing
-    contribute/commit-format
 
 Project Information
 ===================
@@ -120,10 +119,3 @@ Project Information
 - **Source Code**: https://github.com/mergecal/icalendar-anonymizer
 - **Issue Tracker**: https://github.com/mergecal/icalendar-anonymizer/issues
 - **PyPI**: https://pypi.org/project/icalendar-anonymizer/
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
