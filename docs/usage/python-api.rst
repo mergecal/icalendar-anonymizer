@@ -276,6 +276,10 @@ Events (VEVENT)
 
 .. code-block:: python
 
+    from icalendar import Calendar, Event
+    from icalendar_anonymizer import anonymize
+    from datetime import datetime
+
     # Create an event
     event = Event()
     event.add('summary', 'Project meeting')
@@ -293,6 +297,10 @@ TODOs (VTODO)
 
 .. code-block:: python
 
+    from icalendar import Calendar, Todo
+    from icalendar_anonymizer import anonymize
+    from datetime import datetime
+
     # Create a TODO
     todo = Todo()
     todo.add('summary', 'Fix bug in authentication')
@@ -309,6 +317,10 @@ Journals (VJOURNAL)
 -------------------
 
 .. code-block:: python
+
+    from icalendar import Calendar, Journal
+    from icalendar_anonymizer import anonymize
+    from datetime import datetime
 
     # Create a journal entry
     journal = Journal()
@@ -328,6 +340,10 @@ Alarms (VALARM)
 Alarms within events are also processed:
 
 .. code-block:: python
+
+    from icalendar import Calendar, Event, Alarm
+    from icalendar_anonymizer import anonymize
+    from datetime import timedelta
 
     # Event with alarm
     event = Event()
