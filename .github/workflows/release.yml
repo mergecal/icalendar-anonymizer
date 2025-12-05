@@ -24,18 +24,24 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          generateReleaseNotes: true
+          generateReleaseNotes: false
           body: |
             ## Installation
 
             **PyPI:**
             ```bash
-            pip install icalendar-anonymizer
+            pip install icalendar-anonymizer==${{ github.ref_name }}
             ```
 
-            **Docker Hub:**
+            **Docker:**
             ```bash
             docker pull sashankbhamidi/icalendar-anonymizer:${{ github.ref_name }}
             ```
 
-            See [CHANGES.rst](https://github.com/mergecal/icalendar-anonymizer/blob/main/CHANGES.rst) for full changelog.
+            ## Documentation
+
+            https://icalendar-anonymizer.readthedocs.io/
+
+            ## Changelog
+
+            https://icalendar-anonymizer.readthedocs.io/en/latest/changelog.html
