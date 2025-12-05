@@ -39,7 +39,7 @@ html_theme_options = {
     "logo": {"text": "icalendar-anonymizer"},
     "use_edit_page_button": True,
     "show_toc_level": 2,
-    "navbar_align": "center",
+    "navbar_align": "content",
     "show_nav_level": 1,
     "navigation_with_keys": True,
     "collapse_navigation": False,
