@@ -22,13 +22,28 @@ extensions = [
 # Theme configuration
 html_theme = "pydata_sphinx_theme"
 html_theme_options = {
-    "github_url": "https://github.com/mergecal/icalendar-anonymizer",
+    "icon_links": [
+        {
+            "name": "GitHub",
+            "url": "https://github.com/mergecal/icalendar-anonymizer",
+            "icon": "fa-brands fa-square-github",
+            "type": "fontawesome",
+        },
+        {
+            "name": "PyPI",
+            "url": "https://pypi.org/project/icalendar-anonymizer",
+            "icon": "fa-brands fa-python",
+            "type": "fontawesome",
+        },
+    ],
+    "logo": {"text": "icalendar-anonymizer"},
     "use_edit_page_button": True,
     "show_toc_level": 2,
     "navbar_align": "left",
     "show_nav_level": 1,
     "navigation_with_keys": True,
     "collapse_navigation": False,
+    "search_bar_text": "Search documentation",
 }
 
 html_context = {
