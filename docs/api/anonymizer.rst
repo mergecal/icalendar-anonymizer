@@ -1,9 +1,9 @@
 .. SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
 .. SPDX-License-Identifier: AGPL-3.0-or-later
 
-============================
+========================
 anonymizer - Core Module
-============================
+========================
 
 .. automodule:: icalendar_anonymizer.anonymizer
    :members:

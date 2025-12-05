@@ -1,9 +1,9 @@
 .. SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
 .. SPDX-License-Identifier: AGPL-3.0-or-later
 
-=======================
+====================
 icalendar-anonymizer
-=======================
+====================
 
 Strip personal data from iCalendar files while preserving technical properties for bug reproduction.
 
@@ -62,7 +62,7 @@ Anonymize a calendar:
         f.write(anonymized_cal.to_ical())
 
 What Gets Anonymized?
-======================
+=====================
 
 **Personal data** is hashed using SHA-256:
 

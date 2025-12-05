@@ -67,7 +67,7 @@ Provide your own salt for reproducible output:
     Keep your custom salt secret if you need to prevent others from testing potential matches against the hashed values.
 
 Preserving Additional Properties
-=================================
+================================
 
 Use the ``preserve`` parameter to keep specific properties beyond the default preserved set:
 
@@ -93,12 +93,12 @@ Use the ``preserve`` parameter to keep specific properties beyond the default pr
     anonymized_cal = anonymize(cal, preserve={"CATEGORIES"})
 
 Property Handling Reference
-============================
+===========================
 
 This table shows which properties are anonymized vs. preserved by default.
 
 Preserved Properties (Technical)
----------------------------------
+--------------------------------
 
 These properties are preserved to enable bug reproduction:
 
@@ -166,7 +166,7 @@ These properties are preserved to enable bug reproduction:
      - VEVENT, VTODO, VJOURNAL, VALARM types preserved
 
 Anonymized Properties (Personal Data)
---------------------------------------
+-------------------------------------
 
 These properties contain personal data and are hashed:
 
@@ -208,10 +208,10 @@ These properties contain personal data and are hashed:
      - Anonymized by default (secure default-deny model)
 
 Special Handling Examples
-===========================
+=========================
 
 ATTENDEE and ORGANIZER
------------------------
+----------------------
 
 The CN (Common Name) parameter is hashed while preserving the mailto: structure:
 
@@ -267,7 +267,7 @@ CATEGORIES and RESOURCES are list properties - each value is hashed individually
     CATEGORIES:hash1,hash2,hash3
 
 Working with Different Component Types
-=======================================
+======================================
 
 The anonymization works recursively on all component types:
 
@@ -366,7 +366,7 @@ Error Handling
 The function performs strict type checking:
 
 TypeError for Invalid Calendar
--------------------------------
+------------------------------
 
 .. code-block:: python
 
@@ -379,7 +379,7 @@ TypeError for Invalid Calendar
         print(e)  # "cal must be a Calendar instance"
 
 TypeError for Invalid Salt
----------------------------
+--------------------------
 
 .. code-block:: python
 
@@ -390,7 +390,7 @@ TypeError for Invalid Salt
         print(e)  # "salt must be bytes or None"
 
 TypeError for Invalid Preserve
--------------------------------
+------------------------------
 
 .. code-block:: python
 

@@ -24,7 +24,7 @@ Fork the repository on GitHub, then clone your fork:
     cd icalendar-anonymizer
 
 Install Development Dependencies
----------------------------------
+--------------------------------
 
 Install in editable mode with dev extras:
 
@@ -162,7 +162,7 @@ Configuration
 Ruff settings are in ``pyproject.toml`` under ``[tool.ruff]``. The CI enforces the same Ruff version (>=0.14.0) for consistency.
 
 Pre-commit Hooks (Recommended)
-===============================
+==============================
 
 Pre-commit hooks catch issues before committing, providing faster feedback than waiting for CI.
 
@@ -175,7 +175,7 @@ Setup (One-Time)
     pre-commit install --hook-type commit-msg   # Install commit message validation
 
 What Runs on Every Commit
---------------------------
+-------------------------
 
 - **Ruff linting** (``ruff check --fix``) - Auto-fixes linting errors
 - **Ruff formatting** (``ruff format``) - Auto-formats Python code
@@ -406,7 +406,7 @@ Example Entry
 See the ``CHANGES.rst`` file header for complete formatting guidelines.
 
 Licensing and REUSE Compliance
-===============================
+==============================
 
 This project follows the `REUSE specification <https://reuse.software/>`_ for clear licensing.
 
