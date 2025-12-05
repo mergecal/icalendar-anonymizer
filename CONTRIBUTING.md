@@ -1,3 +1,6 @@
+<!--- SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors -->
+<!--- SPDX-License-Identifier: AGPL-3.0-or-later -->
+
 # Contributing to icalendar-anonymizer
 
 Thanks for contributing to icalendar-anonymizer.
@@ -86,6 +89,7 @@ pre-commit install --hook-type commit-msg  # Install commit message validation
 
 - **Ruff linting** (`ruff check --fix`) - Auto-fixes linting errors
 - **Ruff formatting** (`ruff format`) - Auto-formats Python code
+- **REUSE compliance** (`reuse lint`) - Validates SPDX license headers
 - **Trailing whitespace** - Removes trailing spaces (preserves Markdown line breaks)
 - **End-of-file fixer** - Ensures files end with exactly one newline
 - **YAML validation** - Checks YAML syntax
@@ -206,6 +210,26 @@ icalendar-anonymizer/
 **Build system**: Uses hatchling with hatch-vcs for automatic version management.
 
 **Code style**: 100-character line length enforced by Ruff.
+
+## Licensing and REUSE Compliance
+
+This project follows the [REUSE specification](https://reuse.software/) for clear licensing. All files must include SPDX headers:
+
+```python
+# SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
+# SPDX-License-Identifier: AGPL-3.0-or-later
+```
+
+For different file types:
+- **Python/YAML/TOML**: Use `#` comments
+- **RST files**: Use `.. SPDX-FileCopyrightText:` format
+- **Markdown**: Use `<!--- SPDX-FileCopyrightText: -->` format
+
+Pre-commit hooks automatically check REUSE compliance via `reuse lint`. You can also run it manually:
+
+```bash
+reuse lint
+```
 
 ## Release Process
 

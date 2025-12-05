@@ -1,4 +1,6 @@
+# SPDX-FileCopyrightText: 2025 icalendar-anonymizer contributors
 # SPDX-License-Identifier: AGPL-3.0-or-later
+
 """Core anonymization engine for iCalendar files.
 
 Anonymizes personal data while preserving technical properties needed for
