@@ -105,10 +105,8 @@ version-file = "src/icalendar_anonymizer/_version.py"
 Homepage = "https://github.com/mergecal/icalendar-anonymizer"
 Repository = "https://github.com/mergecal/icalendar-anonymizer"
 Issues = "https://github.com/mergecal/icalendar-anonymizer/issues"
-# TODO(#9): Update to ReadTheDocs URL once Sphinx docs are deployed
-Documentation = "https://github.com/mergecal/icalendar-anonymizer#readme"
-# TODO(#9): Update to ReadTheDocs changelog page
-Changelog = "https://github.com/mergecal/icalendar-anonymizer/blob/main/CHANGES.rst"
+Documentation = "https://icalendar-anonymizer.readthedocs.io"
+Changelog = "https://icalendar-anonymizer.readthedocs.io/en/latest/changelog.html"
 source_archive = "https://github.com/mergecal/icalendar-anonymizer/archive/{commit_hash}.zip"
 
 [tool.hatch.metadata]
