@@ -46,13 +46,6 @@ def hash_text(text: str, salt: bytes) -> str:
 
     Returns:
         Anonymized text with same word count
-
-    Examples:
-        >>> salt = b"test_salt"
-        >>> hash_text("Team Meeting", salt)
-        'a1b2c3d4 e5f6g7h8'  # Two words in, two words out
-        >>> hash_text("Conference Room A", salt)
-        'x1y2z3a4 b5c6d7e8 f9g0h1i2'  # Three words in, three words out
     """
     if not text or not text.strip():
         return text
@@ -77,11 +70,6 @@ def hash_email(email: str, salt: bytes) -> str:
 
     Returns:
         Anonymized email with structure preserved
-
-    Examples:
-        >>> salt = b"test_salt"
-        >>> hash_email("john.doe@example.com", salt)
-        'a1b2c3d4@e5f6g7h8.local'
     """
     if not email or "@" not in email:
         # Not a valid email, just hash as text
@@ -152,10 +140,5 @@ def hash_caladdress_cn(cn: str, salt: bytes) -> str:
 
     Returns:
         Anonymized common name preserving word count
-
-    Examples:
-        >>> salt = b"test_salt"
-        >>> hash_caladdress_cn("John Doe", salt)
-        'a1b2c3d4 e5f6g7h8'  # Two words in, two words out
     """
     return hash_text(cn, salt)
