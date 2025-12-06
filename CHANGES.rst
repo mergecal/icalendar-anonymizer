@@ -49,6 +49,7 @@ New features
 ''''''''''''
 
 - Added Sphinx documentation with PyData theme on ReadTheDocs. Includes installation guide, Python API usage with property reference table, autodoc API reference, and contributing guide. Configured :file:`docs/conf.py` with :py:mod:`sphinx_design`, :py:mod:`sphinx_copybutton`, :py:mod:`myst_parser`, and :py:mod:`sphinx.ext.intersphinx`. Updated :file:`pyproject.toml` with doc dependencies and ReadTheDocs URLs. Added badge to :file:`README.md`. Documentation at https://icalendar-anonymizer.readthedocs.io/. See `Issue 9 <https://github.com/mergecal/icalendar-anonymizer/issues/9>`_.
+- Added :file:`.readthedocs.yaml` configuration file with Ubuntu 24.04 build environment and Python 3.13 to enable automatic documentation builds on ReadTheDocs. See `PR 56 <https://github.com/mergecal/icalendar-anonymizer/pull/56>`_.
 
 Bug fixes
 '''''''''
