@@ -21,13 +21,13 @@ keywords = [
     "vcalendar",
 ]
 authors = [
-    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Sashank Bhamidi", email = "hello@sashank.wiki" },
+    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Abe Hanoka", email = "abe@habet.dev" },
 ]
 maintainers = [
-    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Sashank Bhamidi", email = "hello@sashank.wiki" },
+    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Abe Hanoka", email = "abe@habet.dev" },
 ]
 dynamic = ["urls", "version"]
@@ -70,9 +70,7 @@ dev = [
     "twine>=6.2",
 ]
 
-doc = [
-    "sphinx>=8.2",
-]
+doc = ["sphinx>=8.2"]
 
 test = ["pytest>=9.0", "pytest-cov>=6.0", "coverage>=7.11", "hypothesis>=6.147"]
 
@@ -98,13 +96,12 @@ local_scheme = "no-local-version"
 version-file = "src/icalendar_anonymizer/_version.py"
 
 [tool.hatch.metadata.hooks.vcs.urls]
-Homepage = "https://github.com/mergecal/icalendar-anonymizer"
+Homepage = "https://icalendar-anonymizer.readthedocs.io"
+Documentation = "https://icalendar-anonymizer.readthedocs.io"
 Repository = "https://github.com/mergecal/icalendar-anonymizer"
+Changelog = "https://icalendar-anonymizer.readthedocs.io/en/latest/changelog.html"
 Issues = "https://github.com/mergecal/icalendar-anonymizer/issues"
-# TODO(#9): Update to ReadTheDocs URL once Sphinx docs are deployed
-Documentation = "https://github.com/mergecal/icalendar-anonymizer#readme"
-# TODO(#9): Update to ReadTheDocs changelog page
-Changelog = "https://github.com/mergecal/icalendar-anonymizer/blob/main/CHANGES.rst"
+Discussions = "https://github.com/mergecal/icalendar-anonymizer/discussions"
 source_archive = "https://github.com/mergecal/icalendar-anonymizer/archive/{commit_hash}.zip"
 
 [tool.hatch.metadata]
