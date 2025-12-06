@@ -21,13 +21,13 @@ keywords = [
     "vcalendar",
 ]
 authors = [
-    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Sashank Bhamidi", email = "hello@sashank.wiki" },
+    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Abe Hanoka", email = "abe@habet.dev" },
 ]
 maintainers = [
-    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Sashank Bhamidi", email = "hello@sashank.wiki" },
+    { name = "Nicco Kunzmann", email = "niccokunzmann@rambler.ru" },
     { name = "Abe Hanoka", email = "abe@habet.dev" },
 ]
 dynamic = ["urls", "version"]
@@ -102,11 +102,12 @@ local_scheme = "no-local-version"
 version-file = "src/icalendar_anonymizer/_version.py"
 
 [tool.hatch.metadata.hooks.vcs.urls]
-Homepage = "https://github.com/mergecal/icalendar-anonymizer"
-Repository = "https://github.com/mergecal/icalendar-anonymizer"
-Issues = "https://github.com/mergecal/icalendar-anonymizer/issues"
+Homepage = "https://icalendar-anonymizer.readthedocs.io"
 Documentation = "https://icalendar-anonymizer.readthedocs.io"
+Repository = "https://github.com/mergecal/icalendar-anonymizer"
 Changelog = "https://icalendar-anonymizer.readthedocs.io/en/latest/changelog.html"
+Issues = "https://github.com/mergecal/icalendar-anonymizer/issues"
+Discussions = "https://github.com/mergecal/icalendar-anonymizer/discussions"
 source_archive = "https://github.com/mergecal/icalendar-anonymizer/archive/{commit_hash}.zip"
 
 [tool.hatch.metadata]
