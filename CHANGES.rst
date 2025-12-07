@@ -42,11 +42,23 @@ When adding entries:
 
 - Start with a past tense verb, such as "Added", "Fixed", "Removed", "Updated", and other verbs.
 
-0.1.0 (unreleased)
+0.1.1 (unreleased)
 ------------------
 
 Breaking changes
 ''''''''''''''''
+
+New features
+''''''''''''
+
+Minor changes
+'''''''''''''
+
+Bug fixes
+'''''''''
+
+0.1.0 (2025-12-05)
+------------------
 
 New features
 ''''''''''''
@@ -72,6 +84,3 @@ Minor changes
 - Parametrized duplicate test patterns using :py:func:`pytest.mark.parametrize` for datetime, recurrence, metadata, text anonymization, and word count tests. Reduced test duplication while maintaining coverage. See `Issue 52 <https://github.com/mergecal/icalendar-anonymizer/issues/52>`_.
 - Added doctest validation for core modules with :file:`test_with_doctest.py`. See `Issue 52 <https://github.com/mergecal/icalendar-anonymizer/issues/52>`_.
 - Updated :file:`CONTRIBUTING.md` with code style guidelines including docstring format, test organization patterns, and import conventions. See `Issue 52 <https://github.com/mergecal/icalendar-anonymizer/issues/52>`_.
-
-Bug fixes
-'''''''''
