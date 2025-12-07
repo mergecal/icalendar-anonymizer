@@ -5,42 +5,42 @@
 Change log
 ==========
 
-icalendar-anonymizer uses `Semantic Versioning <https://semver.org>`_.
-
-Given a version number MAJOR.MINOR.PATCH, increment the:
-
-- MAJOR version when you make incompatible API changes.
-- MINOR version when you add functionality in a backward compatible manner.
-- PATCH version when you make backward compatible bug fixes.
-
-When adding entries:
-
-- Add entries as bullet points under the appropriate category.
-- Use double backticks for `inline literals <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#rst-roles>`_.
-
-  .. code-block:: rst
-
-      ``PROPERTY``
-
-- Use the `Python domain <https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_ to mark up Python modules, classes, methods, and other Python objects.
-
-  .. code-block:: rst
-
-      :py:func:`function_name`
-
-- Use the ``:file:`` directive for `files <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-file>`_.
-
-  .. code-block:: rst
-
-      :file:`file.py`
-
-- Reference issues and pull requests with a link when relevant.
-
-  .. code-block:: rst
-
-      See `Issue 123 <url>`_.
-
-- Start with a past tense verb, such as "Added", "Fixed", "Removed", "Updated", and other verbs.
+.. icalendar-anonymizer uses `Semantic Versioning <https://semver.org>`_.
+..
+.. Given a version number MAJOR.MINOR.PATCH, increment the:
+..
+.. - MAJOR version when you make incompatible API changes.
+.. - MINOR version when you add functionality in a backward compatible manner.
+.. - PATCH version when you make backward compatible bug fixes.
+..
+.. When adding entries:
+..
+.. - Add entries as bullet points under the appropriate category.
+.. - Use double backticks for `inline literals <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#rst-roles>`_.
+..
+..   .. code-block:: rst
+..
+..       ``PROPERTY``
+..
+.. - Use the `Python domain <https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_ to mark up Python modules, classes, methods, and other Python objects.
+..
+..   .. code-block:: rst
+..
+..       :py:func:`function_name`
+..
+.. - Use the ``:file:`` directive for `files <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-file>`_.
+..
+..   .. code-block:: rst
+..
+..       :file:`file.py`
+..
+.. - Reference issues and pull requests with a link when relevant.
+..
+..   .. code-block:: rst
+..
+..       See `Issue 123 <url>`_.
+..
+.. - Start with a past tense verb, such as "Added", "Fixed", "Removed", "Updated", and other verbs.
 
 0.1.1 (unreleased)
 ------------------
@@ -53,6 +53,8 @@ New features
 
 Minor changes
 '''''''''''''
+
+- Commented out CHANGES.rst formatting guidelines to hide from rendered documentation. Added note in :file:`CONTRIBUTING.md` directing contributors to read the source file for formatting guidelines. Guidelines remain visible in source. See `Issue 61 <https://github.com/mergecal/icalendar-anonymizer/issues/61>`_.
 
 Bug fixes
 '''''''''
