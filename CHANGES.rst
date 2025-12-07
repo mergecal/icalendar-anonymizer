@@ -5,51 +5,59 @@
 Change log
 ==========
 
-icalendar-anonymizer uses `Semantic Versioning <https://semver.org>`_.
-
-Given a version number MAJOR.MINOR.PATCH, increment the:
-
-- MAJOR version when you make incompatible API changes.
-- MINOR version when you add functionality in a backward compatible manner.
-- PATCH version when you make backward compatible bug fixes.
-
-When adding entries:
-
-- Add entries as bullet points under the appropriate category.
-- Use double backticks for `inline literals <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#rst-roles>`_.
-
-  .. code-block:: rst
-
-      ``PROPERTY``
-
-- Use the `Python domain <https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_ to mark up Python modules, classes, methods, and other Python objects.
-
-  .. code-block:: rst
-
-      :py:func:`function_name`
-
-- Use the ``:file:`` directive for `files <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-file>`_.
-
-  .. code-block:: rst
-
-      :file:`file.py`
-
-- Reference issues and pull requests with a link when relevant.
-
-  .. code-block:: rst
-
-      See `Issue 123 <url>`_.
-
-- Start with a past tense verb, such as "Added", "Fixed", "Removed", "Updated", and other verbs.
+.. icalendar-anonymizer uses `Semantic Versioning <https://semver.org>`_.
+..
+.. Given a version number MAJOR.MINOR.PATCH, increment the:
+..
+.. - MAJOR version when you make incompatible API changes.
+.. - MINOR version when you add functionality in a backward compatible manner.
+.. - PATCH version when you make backward compatible bug fixes.
+..
+.. When adding entries:
+..
+.. - Add entries as bullet points under the appropriate category.
+.. - Use double backticks for `inline literals <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#rst-roles>`_.
+..
+..   .. code-block:: rst
+..
+..       ``PROPERTY``
+..
+.. - Use the `Python domain <https://www.sphinx-doc.org/en/master/usage/domains/python.html>`_ to mark up Python modules, classes, methods, and other Python objects.
+..
+..   .. code-block:: rst
+..
+..       :py:func:`function_name`
+..
+.. - Use the ``:file:`` directive for `files <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-file>`_.
+..
+..   .. code-block:: rst
+..
+..       :file:`file.py`
+..
+.. - Reference issues and pull requests with a link when relevant.
+..
+..   .. code-block:: rst
+..
+..       See `Issue 123 <url>`_.
+..
+.. - Start with a past tense verb, such as "Added", "Fixed", "Removed", "Updated", and other verbs.
 
 0.1.1 (unreleased)
 ------------------
+
+Breaking changes
+''''''''''''''''
 
 New features
 ''''''''''''
 
 - Added Sphinx documentation with PyData theme on ReadTheDocs. Includes installation guide, Python API usage with property reference table, autodoc API reference, and contributing guide. Configured :file:`docs/conf.py` with :py:mod:`sphinx_design`, :py:mod:`sphinx_copybutton`, :py:mod:`myst_parser`, and :py:mod:`sphinx.ext.intersphinx`. Updated :file:`pyproject.toml` with doc dependencies and ReadTheDocs URLs. Added badge to :file:`README.md`. Documentation at https://icalendar-anonymizer.readthedocs.io/. See `Issue 9 <https://github.com/mergecal/icalendar-anonymizer/issues/9>`_.
 - Added :file:`.readthedocs.yaml` configuration file with Ubuntu 24.04 build environment and Python 3.13 to enable automatic documentation builds on ReadTheDocs. See `PR 56 <https://github.com/mergecal/icalendar-anonymizer/pull/56>`_.
+
+Minor changes
+'''''''''''''
+
+- Commented out CHANGES.rst formatting guidelines to hide from rendered documentation. Added note in :file:`CONTRIBUTING.md` directing contributors to read the source file for formatting guidelines. Guidelines remain visible in source. See `Issue 61 <https://github.com/mergecal/icalendar-anonymizer/issues/61>`_.
 
 Bug fixes
 '''''''''
@@ -61,6 +69,7 @@ Bug fixes
 
 New features
 ''''''''''''
+
 - Added ``preserve`` parameter to :py:func:`anonymize` function. Accepts optional set of property names to preserve beyond defaults. Case-insensitive. Allows preserving properties like ``CATEGORIES`` or ``COMMENT`` for bug reproduction when user confirms no sensitive data. Added 7 tests for preserve functionality. See `Issue 53 <https://github.com/mergecal/icalendar-anonymizer/issues/53>`_.
 - Added core anonymization engine with :py:func:`anonymize` function using SHA-256 deterministic hashing. Removes personal data (names, emails, locations, descriptions) while preserving technical properties (dates, recurrence, timezones). Configurable salt parameter enables reproducible output. Property classification system with default-deny for unknown properties. Structure-preserving hash functions maintain word count and email format. UID uniqueness preserved across calendar. Special handling for ``ATTENDEE``/``ORGANIZER`` with ``CN`` parameter anonymization. Test suite with 35 tests achieves 95% coverage. See `Issue 1 <https://github.com/mergecal/icalendar-anonymizer/issues/1>`_ and `Issue 2 <https://github.com/mergecal/icalendar-anonymizer/issues/2>`_.
 - Added comprehensive CI/CD workflows with GitHub Actions: test matrix across Ubuntu/Windows/macOS with Python 3.11-3.13, Ruff to lint and check the format of code, Codecov integration with multi-platform coverage tracking, PyPI trusted publishing (OIDC, no tokens required), Docker multi-arch builds (AMD64/ARM64), and automatic GitHub releases with generated notes. Added :file:`.github/workflows/tests.yml`, :file:`.github/workflows/publish.yml`, :file:`.github/workflows/docker.yml`, and :file:`.github/workflows/release.yml`. Configured hatch test matrix for local multi-version testing and coverage exclusions in :file:`pyproject.toml`. Added CI/CD badges to :file:`README.md` (tests, coverage, PyPI version, Python versions, Docker pulls). Added test structure with placeholder files referencing related issues. Docker images published to Docker Hub at ``sashankbhamidi/icalendar-anonymizer``. See `Issue 10 <https://github.com/mergecal/icalendar-anonymizer/issues/10>`_.

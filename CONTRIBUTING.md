@@ -183,7 +183,9 @@ Standard imports at top, group by: standard library, third-party, local. Sort al
 
 ## Documentation
 
-Update `CHANGES.rst` for user-facing changes. See the file header for formatting guidelines.
+Update `CHANGES.rst` for user-facing changes.
+
+**Formatting guidelines**: The formatting guidelines in `CHANGES.rst` are commented out (lines 8-43) so they don't appear in the rendered documentation. Contributors should read the [source file](CHANGES.rst) directly to see the full formatting guidelines.
 
 Add docstrings to public APIs. We use Sphinx for documentation generation.
 
