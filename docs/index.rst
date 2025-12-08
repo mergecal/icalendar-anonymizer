@@ -22,6 +22,12 @@ Strip personal data from iCalendar files while preserving technical properties f
 
         Using the anonymize() function
 
+    .. grid-item-card:: 💻 Command-Line Interface
+        :link: usage/cli
+        :link-type: doc
+
+        Using icalendar-anonymize and ican commands
+
     .. grid-item-card:: 📚 API Reference
         :link: api/index
         :link-type: doc
@@ -98,6 +104,7 @@ Documentation
     installation
     usage/python-api
     api/index
+    usage/cli
 
 .. toctree::
     :maxdepth: 1

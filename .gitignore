@@ -60,3 +60,4 @@ src/icalendar_anonymizer/_version.py
 
 # UV lock file
 uv.lock
+docs/_build/

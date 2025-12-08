@@ -30,14 +30,13 @@ Install optional extras for CLI and web service support:
 Command-Line Interface
 ----------------------
 
-.. note::
-    Not yet implemented. See `Issue #3 <https://github.com/mergecal/icalendar-anonymizer/issues/3>`_.
-
-When available, install with:
+Install with:
 
 .. code-block:: bash
 
     pip install icalendar-anonymizer[cli]
+
+This installs the :program:`icalendar-anonymize` and :program:`ican` commands. See :doc:`usage/cli` for usage details.
 
 Web Service
 -----------
