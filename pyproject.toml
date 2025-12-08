@@ -75,7 +75,6 @@ doc = [
     "pydata-sphinx-theme>=0.16.0",
     "sphinx-copybutton>=0.5.2",
     "sphinx-design>=0.6.0",
-    "myst-parser>=4.0",
 ]
 
 test = ["pytest>=9.0", "pytest-cov>=6.0", "coverage>=7.11", "hypothesis>=6.147"]

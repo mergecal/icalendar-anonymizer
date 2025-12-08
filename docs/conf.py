@@ -16,7 +16,6 @@ extensions = [
     "sphinx.ext.autosectionlabel",
     "sphinx_copybutton",
     "sphinx_design",
-    "myst_parser",
 ]
 
 # Theme configuration
@@ -58,12 +57,6 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "icalendar": ("https://icalendar.readthedocs.io/en/latest/", None),
 }
-
-# MyST parser configuration
-myst_enable_extensions = [
-    "colon_fence",
-    "deflist",
-]
 
 # Napoleon settings (Google-style docstrings)
 napoleon_google_docstring = True
