@@ -3,7 +3,7 @@
 
 # Contributing to icalendar-anonymizer
 
-Thanks for contributing to icalendar-anonymizer.
+Quick reference for contributors. For a detailed guide with CHANGES.rst formatting and more, see the [Contributing Guide on Read the Docs](https://icalendar-anonymizer.readthedocs.io/stable/contributing.html).
 
 
 ## Getting Started

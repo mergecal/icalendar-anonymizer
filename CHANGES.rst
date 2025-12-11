@@ -51,6 +51,8 @@ Breaking changes
 New features
 ''''''''''''
 
+- Added Sphinx documentation with PyData theme on Read the Docs. Includes installation guide, Python API usage with property reference table, autodoc API reference, and contributing guide. Configured :file:`docs/conf.py` with :py:mod:`sphinx_design`, :py:mod:`sphinx_copybutton`, :py:mod:`sphinx.ext.intersphinx`. Updated :file:`pyproject.toml` with doc dependencies and Read the Docs URLs. Added badge to :file:`README.md`. Documentation at https://icalendar-anonymizer.readthedocs.io/. See `Issue 9 <https://github.com/mergecal/icalendar-anonymizer/issues/9>`_.
+- Added :file:`.readthedocs.yaml` configuration file with Ubuntu 24.04 build environment and Python 3.13 to enable automatic documentation builds on Read the Docs. See `PR 56 <https://github.com/mergecal/icalendar-anonymizer/pull/56>`_.
 - Added command-line interface with :program:`icalendar-anonymize` and :program:`ican` commands. Supports stdin/stdout piping, file I/O, and verbose mode. Uses Click 8.3.1 for argument parsing with built-in ``-`` convention for Unix-style streams. Binary mode handling for ICS files. Comprehensive error handling with clear messages. Install with ``pip install icalendar-anonymizer[cli]``. Includes 17 tests maintaining overall project coverage at 95%+. See `Issue 3 <https://github.com/mergecal/icalendar-anonymizer/issues/3>`_.
 
 Minor changes
@@ -60,6 +62,8 @@ Minor changes
 
 Bug fixes
 '''''''''
+
+- Fixed GitHub release notes to strip "v" prefix from PyPI version in install command. Added version extraction step in :file:`.github/workflows/release.yml` to convert tag ``v0.1.0`` to ``0.1.0`` for pip install command, ensuring correct PyPI package installation.
 
 0.1.0 (2025-12-05)
 ------------------
