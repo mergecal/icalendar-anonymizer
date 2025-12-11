@@ -94,10 +94,11 @@ icalendar-anonymize calendar.ics
 ```
 
 **Options:**
-- `-i, --input FILE` - Input file (default: stdin)
+- `[INPUT]` - Input file (default: stdin, use `-` for explicit stdin)
 - `-o, --output FILE` - Output file (default: stdout)
-- `-v, --verbose` - Show processing details
-- `--version` - Print version
+- `-v, --verbose` - Show processing information on stderr
+- `--version` - Display version
+- `--help` - Show usage information
 
 ### Web Service
 
