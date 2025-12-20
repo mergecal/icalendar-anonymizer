@@ -60,7 +60,10 @@ class AnonymizeRequest(BaseModel):
 
 
 def _is_private_ip(hostname: str) -> bool:
-    """Check if hostname resolves to a private IP address.
+    """Check if hostname string is a private IP address.
+
+    Does not perform DNS resolution. Hostnames will return False and be
+    resolved later by httpx.
 
     Args:
         hostname: Hostname or IP address to check
