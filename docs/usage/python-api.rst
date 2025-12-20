@@ -29,19 +29,7 @@ Use :py:func:`icalendar_anonymizer.anonymize` to anonymize a :py:class:`icalenda
 Function Signature
 ==================
 
-.. py:function:: anonymize(cal, salt=None, preserve=None)
-
-    Anonymize an iCalendar by hashing personal data while preserving technical properties.
-
-    :param cal: Calendar object to anonymize
-    :type cal: icalendar.Calendar
-    :param salt: Custom salt for deterministic hashing (default: internal salt)
-    :type salt: bytes or None
-    :param preserve: Additional property names to preserve beyond defaults (case-insensitive)
-    :type preserve: set[str] or None
-    :return: New anonymized Calendar object
-    :rtype: icalendar.Calendar
-    :raises TypeError: If ``cal`` is not a Calendar, ``salt`` is not bytes, or ``preserve`` is not a set
+.. autofunction:: icalendar_anonymizer.anonymize
 
 Using Custom Salt
 =================
@@ -359,6 +347,13 @@ Alarms within events are also processed:
 
     # Anonymize
     anonymized_cal = anonymize(cal)
+
+Supported Components
+====================
+
+.. note::
+   This library supports standard iCalendar components: VEVENT, VTODO, VJOURNAL, and VALARM.
+   Components from other standards or extensions may not be fully supported.
 
 Error Handling
 ==============
