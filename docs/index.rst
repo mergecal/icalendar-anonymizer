@@ -28,6 +28,12 @@ Strip personal data from iCalendar files while preserving technical properties f
 
         Using icalendar-anonymize and ican commands
 
+    .. grid-item-card:: 🌐 Web Service
+        :link: usage/web-service
+        :link-type: doc
+
+        REST API endpoints and self-hosting
+
     .. grid-item-card:: 📚 API Reference
         :link: api/index
         :link-type: doc
@@ -103,8 +109,9 @@ Documentation
 
     installation
     usage/python-api
-    api/index
     usage/cli
+    usage/web-service
+    api/index
 
 .. toctree::
     :maxdepth: 1

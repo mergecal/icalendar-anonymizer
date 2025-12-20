@@ -41,14 +41,13 @@ This installs the :program:`icalendar-anonymize` and :program:`ican` commands. S
 Web Service
 -----------
 
-.. note::
-    Not yet implemented. See `Issue #4 <https://github.com/mergecal/icalendar-anonymizer/issues/4>`_.
-
-When available, install with:
+Install with:
 
 .. code-block:: bash
 
     pip install icalendar-anonymizer[web]
+
+This installs FastAPI, uvicorn, and dependencies for the REST API server. See :doc:`usage/web-service` for usage details.
 
 All Features
 ------------
