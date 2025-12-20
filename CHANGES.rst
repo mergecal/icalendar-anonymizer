@@ -51,6 +51,7 @@ Breaking changes
 New features
 ''''''''''''
 
+- Added FastAPI web service with three endpoints: ``POST /anonymize`` (JSON), ``POST /upload`` (file), ``GET /fetch`` (URL). SSRF protection blocks private IPs, localhost, and invalid schemes. 10s timeout, 10MB limit. Install: ``pip install icalendar-anonymizer[web]``. See `Issue 4 <https://github.com/mergecal/icalendar-anonymizer/issues/4>`_.
 - Added command-line interface with :program:`icalendar-anonymize` and :program:`ican` commands. Supports stdin/stdout piping, file I/O, and verbose mode. Uses Click 8.3.1 for argument parsing with built-in ``-`` convention for Unix-style streams. Binary mode handling for ICS files. Comprehensive error handling with clear messages. Install with ``pip install icalendar-anonymizer[cli]``. Includes 17 tests maintaining overall project coverage at 95%+. See `Issue 3 <https://github.com/mergecal/icalendar-anonymizer/issues/3>`_.
 
 Minor changes
