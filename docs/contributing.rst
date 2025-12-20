@@ -291,6 +291,35 @@ Line Length
 
 **100 characters maximum** - enforced by Ruff.
 
+Documentation Standards
+-----------------------
+
+API Documentation
+~~~~~~~~~~~~~~~~~
+
+Use **autodoc** for API function signatures in Sphinx documentation:
+
+.. code-block:: rst
+
+    .. autofunction:: icalendar_anonymizer.anonymize
+
+This ensures documentation stays in sync with code. Don't manually copy function signatures.
+
+Code Examples
+~~~~~~~~~~~~~
+
+Use **doctest format** for Python examples in documentation:
+
+.. code-block:: rst
+
+    .. doctest::
+
+        >>> from icalendar import Calendar
+        >>> from icalendar_anonymizer import anonymize
+        >>> # Example code here
+
+This allows examples to be automatically tested for correctness.
+
 Pull Request Process
 ====================
 
