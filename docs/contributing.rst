@@ -291,11 +291,11 @@ Line Length
 
 **100 characters maximum** - enforced by Ruff.
 
-Documentation Standards
------------------------
+Documentation
+-------------
 
 API Documentation
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 Use **autodoc** for API function signatures in Sphinx documentation:
 
@@ -306,7 +306,7 @@ Use **autodoc** for API function signatures in Sphinx documentation:
 This ensures documentation stays in sync with code. Don't manually copy function signatures.
 
 Code Examples
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 Use **doctest format** for Python examples in documentation:
 
@@ -490,3 +490,11 @@ Getting Help
 - Check the `Issue Tracker <https://github.com/mergecal/icalendar-anonymizer/issues>`_
 - Open a new issue for bugs or feature requests
 - For major changes, open an issue for discussion before starting work
+
+Reference
+=========
+
+.. toctree::
+   :maxdepth: 1
+
+   contribute/commit-format
