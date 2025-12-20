@@ -14,13 +14,13 @@ Strip personal data from iCalendar files while preserving technical properties f
         :link: installation
         :link-type: doc
 
-        Install with pip, Docker, or from source
+        Install with pip or Docker
 
     .. grid-item-card:: 🐍 Python API
         :link: usage/python-api
         :link-type: doc
 
-        Using the anonymize() function
+        Using the ``anonymize()`` function
 
     .. grid-item-card:: 💻 Command-Line Interface
         :link: usage/cli
@@ -51,7 +51,7 @@ Quick Start
 
 Install the package:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install icalendar-anonymizer
 
@@ -94,12 +94,23 @@ See the :doc:`usage/python-api` for the complete property reference table.
 Features
 ========
 
-- **Deterministic hashing**: Same input + same salt = same output
-- **Structure preservation**: Word count and email format stay intact
-- **UID uniqueness**: UIDs remain unique across the calendar
-- **Customizable**: Use ``preserve`` to keep specific properties
-- **Secure by default**: Unknown properties get anonymized
-- **Well tested**: High test coverage with parametrized tests
+Deterministic hashing
+    Same input + same salt = same output
+
+Structure preservation
+    Word count and email format stay intact
+
+UID uniqueness
+    UIDs remain unique across the calendar
+
+Customizable
+    Use ``preserve`` to keep specific properties
+
+Secure by default
+    Unknown properties get anonymized
+
+Well tested
+    High test coverage with parametrized tests
 
 Documentation
 =============
@@ -123,7 +134,14 @@ Documentation
 Project Information
 ===================
 
-- **License**: AGPL-3.0-or-later
-- **Source Code**: https://github.com/mergecal/icalendar-anonymizer
-- **Issue Tracker**: https://github.com/mergecal/icalendar-anonymizer/issues
-- **PyPI**: https://pypi.org/project/icalendar-anonymizer/
+License
+    AGPL-3.0-or-later
+
+Source Code
+    https://github.com/mergecal/icalendar-anonymizer
+
+Issue Tracker
+    https://github.com/mergecal/icalendar-anonymizer/issues
+
+PyPI
+    https://pypi.org/project/icalendar-anonymizer/

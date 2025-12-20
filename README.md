@@ -18,7 +18,7 @@ Calendar bugs are hard to reproduce without actual calendar data, but people can
 
 ## Documentation
 
-**Full documentation is available at [icalendar-anonymizer.readthedocs.io](https://icalendar-anonymizer.readthedocs.io/)**
+Full documentation is available at https://icalendar-anonymizer.readthedocs.io/stable/.
 
 ## Installation
 

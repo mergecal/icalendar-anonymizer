@@ -18,7 +18,7 @@ Fork and Clone
 
 Fork the repository on GitHub, then clone your fork:
 
-.. code-block:: bash
+.. code-block:: shell
 
     git clone https://github.com/YOUR-USERNAME/icalendar-anonymizer.git
     cd icalendar-anonymizer
@@ -28,7 +28,7 @@ Install Development Dependencies
 
 Install in editable mode with dev extras:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install -e ".[dev]"
 
@@ -43,7 +43,7 @@ This installs:
 
 For documentation building, also install:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install -e ".[doc]"
 
@@ -54,7 +54,7 @@ Development Workflow
 
    Create a branch from ``main``:
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        git checkout main
        git pull origin main
@@ -66,7 +66,7 @@ Development Workflow
 
 3. **Run Tests and Linting**
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        pytest                     # Run tests
        ruff check .               # Check for linting errors
@@ -77,14 +77,14 @@ Development Workflow
 
    Follow :doc:`contribute/commit-format` for commit messages:
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        git add .
        git commit -m "feat: add new feature description"
 
 5. **Push and Open Pull Request**
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        git push origin feature-name
 
@@ -96,14 +96,14 @@ Running Tests
 Run All Tests
 -------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     pytest
 
 Run with Coverage
 -----------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     pytest --cov=src/icalendar_anonymizer --cov-report=html
 
@@ -138,21 +138,21 @@ We use `Ruff <https://docs.astral.sh/ruff/>`_ for linting and code formatting wi
 Check for Errors
 ^^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: shell
 
     ruff check .
 
 Auto-Fix Errors
 ^^^^^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: shell
 
     ruff check . --fix
 
 Format Code
 ^^^^^^^^^^^
 
-.. code-block:: bash
+.. code-block:: shell
 
     ruff format .
 
@@ -169,7 +169,7 @@ Pre-commit hooks catch issues before committing, providing faster feedback than 
 Setup (One-Time)
 ----------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     pre-commit install                          # Install pre-commit hooks
     pre-commit install --hook-type commit-msg   # Install commit message validation
@@ -200,7 +200,7 @@ All checks complete in under 5 seconds.
 Run Manually
 ------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     pre-commit run --all-files       # Run all hooks on all files
     pre-commit run ruff --all-files  # Run specific hook
@@ -210,7 +210,7 @@ Skip Hooks (Sparingly)
 
 For work-in-progress commits:
 
-.. code-block:: bash
+.. code-block:: shell
 
     git commit --no-verify
 
@@ -449,7 +449,7 @@ Checking Compliance
 
 Pre-commit hooks automatically check REUSE compliance. You can also run manually:
 
-.. code-block:: bash
+.. code-block:: shell
 
     reuse lint
 

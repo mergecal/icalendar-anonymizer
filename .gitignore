@@ -58,6 +58,6 @@ env/
 # Generated version file
 src/icalendar_anonymizer/_version.py
 
-# UV lock file
+# uv lock file
 uv.lock
 docs/_build/

@@ -5,22 +5,24 @@
 Installation
 ============
 
+This guide covers installation for end users. For development setup, see :doc:`contributing`.
+
 Requirements
 ============
 
-- Python 3.11 or later
+- Python 3.11, 3.12, or 3.13
 - pip package manager
 
 Basic Installation
 ==================
 
-Install the core library with pip:
+Install the core package with pip:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install icalendar-anonymizer
 
-This installs only the Python library with its core dependency (``icalendar>=6.3.0``).
+This installs only the Python package with its core dependency (``icalendar``).
 
 Optional Features
 =================
@@ -32,7 +34,7 @@ Command-Line Interface
 
 Install with:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install icalendar-anonymizer[cli]
 
@@ -43,7 +45,7 @@ Web Service
 
 Install with:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install icalendar-anonymizer[web]
 
@@ -54,44 +56,9 @@ All Features
 
 Install all optional extras:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install icalendar-anonymizer[all]
-
-Development Installation
-========================
-
-To contribute, install with dev dependencies:
-
-.. code-block:: bash
-
-    git clone https://github.com/mergecal/icalendar-anonymizer.git
-    cd icalendar-anonymizer
-    pip install -e ".[dev]"
-
-This includes:
-
-- pytest for testing
-- ruff for linting and formatting
-- pre-commit hooks
-- commitizen for conventional commits
-- reuse for license compliance
-- build and twine for packaging
-
-See the :doc:`contributing` guide for more details.
-
-Documentation Building
-======================
-
-To build the documentation locally:
-
-.. code-block:: bash
-
-    pip install -e ".[doc]"
-    cd docs
-    make html
-
-The documentation will be built in ``docs/_build/html/``.
 
 Docker
 ======
@@ -101,7 +68,7 @@ Docker
 
 When available:
 
-.. code-block:: bash
+.. code-block:: shell
 
     docker pull sashankbhamidi/icalendar-anonymizer
 
@@ -117,7 +84,7 @@ Check the installation:
 
 Or check the installed version with pip:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip show icalendar-anonymizer
 
@@ -126,7 +93,7 @@ Upgrading
 
 Upgrade to the latest version:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install --upgrade icalendar-anonymizer
 
@@ -135,7 +102,7 @@ Uninstalling
 
 Remove the package:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip uninstall icalendar-anonymizer
 
@@ -147,18 +114,38 @@ Import Error
 
 If you get an ``ImportError`` when importing ``icalendar_anonymizer``:
 
-1. Verify the package is installed: ``pip list | grep icalendar``
-2. Check you're using Python 3.11+: ``python --version``
-3. Ensure you're in the correct virtual environment
+#. Verify the package is installed.
+
+   .. code-block:: shell
+
+       pip list | grep icalendar
+
+#. Check you're using a supported version of Python.
+
+   .. code-block:: shell
+
+       python --version
+
+#. Ensure you're in the correct virtual environment
 
 Dependency Conflicts
 --------------------
 
 If you encounter dependency conflicts with ``icalendar``:
 
-1. The package requires ``icalendar>=6.3.0``
-2. Check your installed version: ``pip show icalendar``
-3. Upgrade if needed: ``pip install --upgrade icalendar``
+#. The package requires a compatible version of ``icalendar``
+
+#. Check your installed version.
+
+   .. code-block:: shell
+
+       pip show icalendar
+
+#. Upgrade if needed.
+
+   .. code-block:: shell
+
+       pip install --upgrade icalendar
 
 Getting Help
 ============
@@ -166,4 +153,4 @@ Getting Help
 If you encounter installation issues:
 
 - Check the `Issue Tracker <https://github.com/mergecal/icalendar-anonymizer/issues>`_
-- Open a new issue with your Python version, OS, and error message
+- Open a new issue if there isn't an existing one
