@@ -12,7 +12,7 @@ Installation
 
 Install the CLI with:
 
-.. code-block:: bash
+.. code-block:: shell
 
     pip install icalendar-anonymizer[cli]
 
@@ -36,7 +36,7 @@ Anonymize a File
 
 Read from a file and write to another file:
 
-.. code-block:: bash
+.. code-block:: shell
 
     icalendar-anonymize calendar.ics -o anonymized.ics
     ican calendar.ics -o anonymized.ics
@@ -46,7 +46,7 @@ Write to stdout
 
 Omit the ``-o`` flag to write to stdout:
 
-.. code-block:: bash
+.. code-block:: shell
 
     icalendar-anonymize calendar.ics
     ican calendar.ics > anonymized.ics
@@ -56,7 +56,7 @@ Read from stdin
 
 Omit the input argument or use ``-`` to read from stdin:
 
-.. code-block:: bash
+.. code-block:: shell
 
     cat calendar.ics | icalendar-anonymize > anonymized.ics
     icalendar-anonymize - -o anonymized.ics
@@ -66,7 +66,7 @@ Unix-Style Piping
 
 Combine with other Unix tools:
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Download and anonymize
     curl https://example.com/calendar.ics | ican > anonymized.ics
@@ -120,7 +120,7 @@ Options Reference
 
    Display version information and exit.
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        $ ican --version
        icalendar-anonymizer, version 0.1.0
@@ -129,7 +129,7 @@ Options Reference
 
    Show usage information and exit.
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        ican --help
 
@@ -139,7 +139,7 @@ Examples
 Basic File Conversion
 ---------------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Anonymize a single file
     ican calendar.ics -o anonymized.ics
@@ -150,7 +150,7 @@ Basic File Conversion
 Pipeline Processing
 -------------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Read from stdin, write to stdout
     cat calendar.ics | ican > anonymized.ics
@@ -164,7 +164,7 @@ Pipeline Processing
 Batch Processing
 ----------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Anonymize all ICS files in directory
     for file in *.ics; do
@@ -179,7 +179,7 @@ Batch Processing
 Remote Files
 ------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Download and anonymize
     curl https://example.com/calendar.ics | ican > local-anon.ics
@@ -190,7 +190,7 @@ Remote Files
 Combining with Other Tools
 ---------------------------
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Anonymize and count events
     ican calendar.ics | grep -c "BEGIN:VEVENT"
@@ -203,6 +203,9 @@ Combining with Other Tools
 
 What Gets Anonymized?
 =====================
+
+.. note::
+   This is a quick reference. See :doc:`python-api` for the complete property reference table.
 
 The CLI uses the same anonymization as the Python API:
 
@@ -313,25 +316,25 @@ If you get ``command not found`` after installation:
 
 1. Verify the CLI extra is installed:
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        pip show icalendar-anonymizer | grep cli
 
 2. Check your PATH includes pip's script directory:
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        python -m site --user-base
 
 3. Reinstall with CLI extra:
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        pip install --force-reinstall icalendar-anonymizer[cli]
 
 4. Use the full Python module path:
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        python -m icalendar_anonymizer.cli calendar.ics
 
@@ -342,7 +345,7 @@ The CLI automatically handles binary mode on Windows. You don't need to worry ab
 
 If you encounter encoding issues on Windows:
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Use binary mode with PowerShell
     Get-Content calendar.ics -Raw | ican > anonymized.ics
@@ -354,13 +357,13 @@ The CLI loads the entire file into memory. For very large files (>100MB):
 
 1. **Monitor memory usage**: Use verbose mode to track progress
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        ican -v large-file.ics -o output.ics
 
 2. **Process in chunks**: Split large calendars before anonymizing
 
-   .. code-block:: bash
+   .. code-block:: shell
 
        # Example: Split by year, then anonymize
        grep -A 100 "DTSTART:2024" calendar.ics | ican > 2024-anon.ics
@@ -372,7 +375,7 @@ Hyphen as Filename
 
 To use a file literally named ``-``:
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Use ./ prefix to treat - as a filename
     ican ./- -o output.ics
@@ -382,13 +385,13 @@ Debugging
 
 Enable verbose mode to see processing steps:
 
-.. code-block:: bash
+.. code-block:: shell
 
     ican -v calendar.ics -o anonymized.ics
 
 Check the exit code after running:
 
-.. code-block:: bash
+.. code-block:: shell
 
     ican calendar.ics
     echo $?  # Unix/macOS/Linux
@@ -409,40 +412,6 @@ If you encounter issues with the CLI:
   - Python version (``python --version``)
   - Package version (``ican --version``)
 
-Advanced Usage
-==============
-
-Custom Salt (Python API Only)
-------------------------------
-
-The CLI uses a default salt. For reproducible output with custom salt, use the Python API:
-
-.. code-block:: python
-
-    from icalendar import Calendar
-    from icalendar_anonymizer import anonymize
-
-    with open('calendar.ics', 'rb') as f:
-        cal = Calendar.from_ical(f.read())
-
-    anonymized = anonymize(cal, salt=b"my-custom-salt-32-bytes-long!")
-
-    with open('anonymized.ics', 'wb') as f:
-        f.write(anonymized.to_ical())
-
-See :doc:`python-api` for details.
-
-Preserving Properties (Python API Only)
-----------------------------------------
-
-The CLI anonymizes all personal data by default. To preserve specific properties, use the Python API:
-
-.. code-block:: python
-
-    anonymized = anonymize(cal, preserve={"CATEGORIES", "LOCATION"})
-
-See :doc:`python-api` for details.
-
 Integration Examples
 ====================
 
@@ -451,7 +420,7 @@ Git Pre-Commit Hook
 
 Automatically anonymize calendars before committing:
 
-.. code-block:: bash
+.. code-block:: shell
 
     #!/bin/bash
     # .git/hooks/pre-commit
@@ -468,29 +437,10 @@ Cron Job
 
 Periodically anonymize shared calendars:
 
-.. code-block:: bash
+.. code-block:: shell
 
     # Crontab entry: Anonymize daily at 2 AM
     0 2 * * * /usr/bin/ican /path/to/calendar.ics -o /path/to/anon.ics
-
-Web Service Integration
------------------------
-
-Use in web applications:
-
-.. code-block:: python
-
-    import subprocess
-
-    def anonymize_uploaded_file(input_path, output_path):
-        """Anonymize uploaded ICS file using CLI."""
-        result = subprocess.run(
-            ['ican', input_path, '-o', output_path],
-            capture_output=True,
-            text=True
-        )
-        if result.returncode != 0:
-            raise RuntimeError(f"Anonymization failed: {result.stderr}")
 
 See Also
 ========
