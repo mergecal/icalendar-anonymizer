@@ -5,9 +5,6 @@
 API Reference
 =============
 
-Public API
-==========
-
 .. toctree::
    :maxdepth: 2
 

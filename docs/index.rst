@@ -46,33 +46,6 @@ Strip personal data from iCalendar files while preserving technical properties f
 
         Development workflow and code style
 
-Quick Start
-===========
-
-Install the package:
-
-.. code-block:: shell
-
-    pip install icalendar-anonymizer
-
-Anonymize a calendar:
-
-.. code-block:: python
-
-    from icalendar import Calendar
-    from icalendar_anonymizer import anonymize
-
-    # Load your calendar
-    with open('calendar.ics', 'rb') as f:
-        cal = Calendar.from_ical(f.read())
-
-    # Anonymize it
-    anonymized_cal = anonymize(cal)
-
-    # Save the result
-    with open('anonymized.ics', 'wb') as f:
-        f.write(anonymized_cal.to_ical())
-
 What Gets Anonymized?
 =====================
 
@@ -111,6 +84,9 @@ Secure by default
 
 Well tested
     High test coverage with parametrized tests
+
+Comprehensive documentation
+    "If it's not documented, it's broken."
 
 Documentation
 =============

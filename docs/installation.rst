@@ -11,7 +11,6 @@ Requirements
 ============
 
 - Python 3.11, 3.12, or 3.13
-- pip package manager
 
 Basic Installation
 ==================
@@ -22,17 +21,17 @@ Install the core package with pip:
 
     pip install icalendar-anonymizer
 
-This installs only the Python package with its core dependency (``icalendar``).
+This installs only the Python package with its core dependency, ``icalendar``.
 
 Optional Features
 =================
 
-Install optional extras for CLI and web service support:
+This section describes how to install optional features of ``icalendar-anonymizer``, including a command-line interface (CLI) and web service support.
 
 Command-Line Interface
 ----------------------
 
-Install with:
+Install the CLI with the following command.
 
 .. code-block:: shell
 
@@ -43,7 +42,7 @@ This installs the :program:`icalendar-anonymize` and :program:`ican` commands. S
 Web Service
 -----------
 
-Install with:
+Install the web service with the following command.
 
 .. code-block:: shell
 
@@ -54,7 +53,7 @@ This installs FastAPI, uvicorn, and dependencies for the REST API server. See :d
 All Features
 ------------
 
-Install all optional extras:
+Install all the foregoing optional features with the following command.
 
 .. code-block:: shell
 
@@ -66,11 +65,11 @@ Docker
 .. note::
     Not yet implemented. See `Issue #8 <https://github.com/mergecal/icalendar-anonymizer/issues/8>`_.
 
-When available:
-
-.. code-block:: shell
-
-    docker pull sashankbhamidi/icalendar-anonymizer
+.. When available:
+..
+.. .. code-block:: shell
+..
+..     docker pull sashankbhamidi/icalendar-anonymizer
 
 Verifying Installation
 ======================
@@ -109,39 +108,40 @@ Remove the package:
 Troubleshooting
 ===============
 
+This section describes how to troubleshoot issues with installation.
+
 Import Error
 ------------
 
-If you get an ``ImportError`` when importing ``icalendar_anonymizer``:
+If you get an ``ImportError`` when importing ``icalendar_anonymizer``, then try the following steps.
 
-#. Verify the package is installed.
+#. Verify that the package is installed.
 
    .. code-block:: shell
 
        pip list | grep icalendar
 
-#. Check you're using a supported version of Python.
+#. Check that you're using a supported version of Python.
 
    .. code-block:: shell
 
        python --version
 
-#. Ensure you're in the correct virtual environment
+#. Ensure that you're in the correct virtual environment.
 
 Dependency Conflicts
 --------------------
 
-If you encounter dependency conflicts with ``icalendar``:
+``icalendar-anonymizer`` requires a compatible version of ``icalendar``.
+If you encounter dependency conflicts with ``icalendar``, then perform the following steps.
 
-#. The package requires a compatible version of ``icalendar``
-
-#. Check your installed version.
+#. Check that your installed version of ``icalendar`` is supported by ``icalendar-anonymizer``.
 
    .. code-block:: shell
 
        pip show icalendar
 
-#. Upgrade if needed.
+#. Upgrade ``icalendar``, if needed.
 
    .. code-block:: shell
 
@@ -152,5 +152,5 @@ Getting Help
 
 If you encounter installation issues:
 
-- Check the `Issue Tracker <https://github.com/mergecal/icalendar-anonymizer/issues>`_
-- Open a new issue if there isn't an existing one
+- Check the `Issue Tracker <https://github.com/mergecal/icalendar-anonymizer/issues>`_ for existing issues.
+- If there isn't an existing issue, then open a new one.

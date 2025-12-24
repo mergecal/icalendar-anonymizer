@@ -45,20 +45,28 @@ Change log
 0.1.1 (unreleased)
 ------------------
 
+.. _v0.1.1-breaking-changes:
+
 Breaking changes
 ''''''''''''''''
+
+.. _v0.1.1-new-features:
 
 New features
 ''''''''''''
 
-- Added Sphinx documentation with PyData theme on Read the Docs. Includes installation guide, Python API reference with property table and autodoc, CLI usage guide, web service API documentation, and contributing guide with commit format reference. Changed bash to shell code-block lexer, converted lists to definition lists, added documentation standards section. Configured :file:`docs/conf.py` with :py:mod:`sphinx_design`, :py:mod:`sphinx_copybutton`, :py:mod:`sphinx.ext.intersphinx`. Updated :file:`pyproject.toml` with doc dependencies. Added badge to :file:`README.md`. Documentation at https://icalendar-anonymizer.readthedocs.io/stable/. See `Issue 9 <https://github.com/mergecal/icalendar-anonymizer/issues/9>`_ and `PR 60 <https://github.com/mergecal/icalendar-anonymizer/pull/60>`_.
+- Added Sphinx documentation with PyData theme on Read the Docs. Includes installation guide, Python API reference with property table and autodoc, CLI usage guide, web service API documentation, and contributing guide with commit format reference. Changed bash to shell code-block lexer, converted lists to definition lists, added documentation standards section. Configured :file:`docs/conf.py` with ``sphinx_design``, ``sphinx_copybutton``, ``sphinx.ext.intersphinx``. Updated :file:`pyproject.toml` with doc dependencies. Added badge to :file:`README.md`. Documentation at https://icalendar-anonymizer.readthedocs.io/stable/. See `Issue 9 <https://github.com/mergecal/icalendar-anonymizer/issues/9>`_ and `PR 60 <https://github.com/mergecal/icalendar-anonymizer/pull/60>`_.
 - Added :file:`.readthedocs.yaml` configuration file with Ubuntu 24.04 build environment and Python 3.13 to enable automatic documentation builds on Read the Docs. See `PR 56 <https://github.com/mergecal/icalendar-anonymizer/pull/56>`_.
-- Added command-line interface with :program:`icalendar-anonymize` and :program:`ican` commands. Supports stdin/stdout piping, file I/O, and verbose mode. Uses Click for argument parsing with built-in ``-`` convention for Unix-style streams. Binary mode handling for ICS files. Comprehensive error handling with clear messages. Install with ``pip install icalendar-anonymizer[cli]``. See `Issue 3 <https://github.com/mergecal/icalendar-anonymizer/issues/3>`_.
+- Added command-line interface with :program:`icalendar-anonymize` and :program:`ican` commands. Supports stdin/stdout piping, file I/O, and verbose mode. Uses :program:`Click` for argument parsing with built-in ``-`` convention for Unix-style streams. Binary mode handling for ICS files. Comprehensive error handling with clear messages. Install with ``pip install icalendar-anonymizer[cli]``. See `Issue 3 <https://github.com/mergecal/icalendar-anonymizer/issues/3>`_.
+
+.. _v0.1.1-minor-changes:
 
 Minor changes
 '''''''''''''
 
 - Commented out CHANGES.rst formatting guidelines to hide from rendered documentation. Added note in :file:`CONTRIBUTING.md` directing contributors to read the source file for formatting guidelines. Guidelines remain visible in source. See `Issue 61 <https://github.com/mergecal/icalendar-anonymizer/issues/61>`_.
+
+.. _v0.1.1-bug-fixes:
 
 Bug fixes
 '''''''''
@@ -67,6 +75,8 @@ Bug fixes
 
 0.1.0 (2025-12-05)
 ------------------
+
+.. _v0.1.0-new-features:
 
 New features
 ''''''''''''
@@ -84,6 +94,8 @@ New features
 - Added :file:`README.md` with installation instructions and usage examples for Python API, CLI, and web service. See `Issue 13 <https://github.com/mergecal/icalendar-anonymizer/issues/13>`_.
 - Added :file:`pyproject.toml` with hatchling build system, hatch-vcs version management, package structure, and dependencies. Tests included in package at ``src/icalendar_anonymizer/tests/``. See `Issue 12 <https://github.com/mergecal/icalendar-anonymizer/issues/12>`_.
 - Added REUSE specification compliance with SPDX headers to all source files, configuration files, documentation, and workflows. Added :file:`.github/workflows/reuse.yml` for automated CI compliance checking and ``reuse`` hook to :file:`.pre-commit-config.yaml` for local validation. Downloaded :file:`LICENSES/AGPL-3.0-or-later.txt`. Project is fully compliant with REUSE 3.3 specification for clear licensing. See `Issue 22 <https://github.com/mergecal/icalendar-anonymizer/issues/22>`_.
+
+.. _v0.1.0-minor-changes:
 
 Minor changes
 '''''''''''''
