@@ -21,21 +21,31 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Extract version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          generateReleaseNotes: true
+          generateReleaseNotes: false
           body: |
             ## Installation
 
             **PyPI:**
             ```bash
-            pip install icalendar-anonymizer
+            pip install icalendar-anonymizer==${{ steps.version.outputs.version }}
             ```
 
-            **Docker Hub:**
+            **Docker:**
             ```bash
             docker pull sashankbhamidi/icalendar-anonymizer:${{ github.ref_name }}
             ```
 
-            See [CHANGES.rst](https://github.com/mergecal/icalendar-anonymizer/blob/main/CHANGES.rst) for full changelog.
+            ## Documentation
+
+            https://icalendar-anonymizer.readthedocs.io/stable/
+
+            ## Changelog
+
+            https://icalendar-anonymizer.readthedocs.io/stable/changelog.html
