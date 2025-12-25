@@ -3,4 +3,4 @@
 
 # Contributing to icalendar-anonymizer
 
-Full contributing guide: https://icalendar-anonymizer.readthedocs.io/stable/contributing.html
+See the contributing guide at https://icalendar-anonymizer.readthedocs.io/stable/contributing.html.
